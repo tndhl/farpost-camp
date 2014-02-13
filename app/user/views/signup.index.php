@@ -18,8 +18,8 @@
     
         <div class="inline">
             <div class="group">
-                <label for="inputSecondname">Фамилия *</label>
-                <input class="required" type="text" name="secondname" id="inputSecondname">
+                <label for="inputLastname">Фамилия *</label>
+                <input class="required" type="text" name="lastname" id="inputLastname">
                 <span class="error"></span>
             </div>
     

@@ -15,6 +15,17 @@ class Services
         @header("Location: " . $url);
         exit;
     }
+
+    public function recursive_array_search($needle, &$haystack)
+    {
+        foreach ($haystack as $key => $value) {
+            if ($needle === $value || (is_array($value) && $this->recursive_array_search($needle, $value) !== false)) {
+                return array("key" => $key, "param" => $value);
+            }
+        }
+
+        return false;
+    }
     
     public function __set($key, $value)
     {
