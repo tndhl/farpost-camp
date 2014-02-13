@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="/public/assets/stylesheets/normalize.css">
     <link rel="stylesheet/less" href="/public/assets/stylesheets/template.less?<?php print time(); ?>">
+
+    <script src="/public/assets/javascripts/jquery.min.js"></script>
 </head>
 <body>
     <div class="header">
