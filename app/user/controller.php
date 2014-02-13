@@ -64,6 +64,7 @@ class Controller extends \Core\Services
         } else {
             $model = new Model;
 
+            // TODO
             $params = array(
                 array("name" => "login", "value" => $_POST["login"]),
                 array("name" => "password", "value" => $_POST["password"]),
