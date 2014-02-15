@@ -14,7 +14,7 @@
         <div class="layout">
             <span class="logo"></span>
             <span class="user-links pull-right">
-                <a href="/user/signup" title="Регистрация">Регистрация</a> | <a href="/user/signin" title="Войти">Войти</a>
+                <?php echo $params["user"]; ?>
             </span></a>
         </div>
 

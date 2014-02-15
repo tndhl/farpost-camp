@@ -1,6 +1,10 @@
 form {
     margin-top: 15px;
 
+    .group + .group {
+        margin-top: 20px;
+    }
+
     .group {
         position: relative;
         margin-bottom: 10px;
@@ -50,6 +54,10 @@ form {
             &:last-child {
                 padding-right: 0;
             }
+        }
+
+        .group + .group {
+            margin-top: 0;
         }
     }
 

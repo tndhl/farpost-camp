@@ -1,0 +1,1 @@
+Добро пожаловать, <?php echo $params["profile"]["firstname"]; ?> (<a href="/?logout">Выйти</a>)

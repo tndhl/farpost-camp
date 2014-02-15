@@ -75,6 +75,7 @@ span { display: inline-block; }
     }
 }
 
+.alert,
 .container {
     position: relative;
     box-sizing: border-box;
@@ -82,3 +83,32 @@ span { display: inline-block; }
     padding: 20px;
     border: 1px solid #d9d9d9;
 }
+
+.container + .container,
+.alert + .container {
+    margin-top: 30px;
+}
+
+.alert {
+    span.error {
+        position: relative;
+        background: transparent url(../../images/icon-error-64.png) no-repeat center center;
+        width: 64px;
+        height: 64px;
+    }
+
+    span.success {
+        position: relative;
+        background: transparent url(../../images/icon-success-64.png) no-repeat center center;
+        width: 64px;
+        height: 64px;
+    }
+
+    h2 {
+        position: relative;
+        display: inline-block;
+        line-height: 64px;
+        top: -21px;
+        left: 15px;
+    }
+}   

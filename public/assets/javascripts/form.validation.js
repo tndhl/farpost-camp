@@ -6,7 +6,7 @@ $(document).find('form').submit(function(e) {
         errorClass: 'error'
     };
 
-    var params = [];
+    var params = {};
     var isNotFailed = false;
 
     $form.find('span.error').each(function(){
@@ -15,9 +15,8 @@ $(document).find('form').submit(function(e) {
 
     $form.find('input.required').each(function(){
         $(this).removeClass('invalid');
-
-        var param = { "name": $(this).prop("name"), "value": $(this).val() };
-        params.push(param);
+        
+        params[$(this).prop("name")] = $(this).val();
     });
 
     $.ajax({
@@ -30,12 +29,8 @@ $(document).find('form').submit(function(e) {
         success: function(result) {
             if (result.length > 0) {
                 for (var key in result) {
-                    var errorSpan = document.createElement('span');
-                    $(errorSpan).addClass(error.errorClass);
-                    $(errorSpan).text(error.msg);
-
                     $form.find('[name=' + result[key] + ']').addClass(error.inputClass);
-                    $form.find('[name=' + result[key] + ']').parent().append(errorSpan);
+                    $form.find('[name=' + result[key] + ']').parent().find('span.' + error.errorClass).text(error.msg);
                 }
             } else {
                 isNotFailed = true;
@@ -43,7 +38,6 @@ $(document).find('form').submit(function(e) {
         }
     });
 
-    console.log(isNotFailed);
     if (isNotFailed) return true;
     else return false;
 });

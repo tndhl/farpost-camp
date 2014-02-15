@@ -1,3 +1,5 @@
+<?php if (!empty($params["alert"])) echo $params["alert"]; ?>
+
 <div class="container">
     <h1>Регистрация пользователя</h1>
     
@@ -30,7 +32,7 @@
             </div>
         </div>
     
-        <div class="group group-inline">
+        <div class="group">
             <label for="inputDepartment">Отдел *</label>
             <input class="required" type="text" name="department" id="inputDepartment">
             <span class="error"></span>

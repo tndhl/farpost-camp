@@ -8,6 +8,19 @@ class Services
     public function __construct()
     {
         $this->template = new \Core\Template(get_class($this));
+
+        $user = new \Library\User;
+
+        if ($user->isUserLoggedIn()) {
+            $this->template->bindParam("user", $this->template->getHtml("templates.user_logged", array("profile" => $user->getUserData())));
+        } else {
+            $this->template->bindParam("user", $this->template->getHtml("templates.user_links"));
+        }
+
+        if (isset($_GET["logout"])) {
+            $user->userLogout();
+            $this->redirect("/");
+        }
     }
 
     public function redirect($url)

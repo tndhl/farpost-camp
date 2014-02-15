@@ -29,10 +29,10 @@ class Controller extends \Core\Services
         /**
          * Проверка length > 0
          */
-        foreach ($params as $param) {
-            if (in_array($param["name"], $this->required_params)) {
-                if (strlen($param["value"]) == 0) {
-                    $result[] = $param["name"];
+        foreach ($params as $attribute => $value) {
+            if (in_array($attribute, $this->required_params)) {
+                if (strlen($value) == 0) {
+                    $result[] = $attribute;
                 }
             }
         }
@@ -40,9 +40,9 @@ class Controller extends \Core\Services
         /**
          * Проверка E-mail
          */
-        if (($email = $this->recursive_array_search("login", $params))) {
-            if (!filter_var($email["param"]["value"], FILTER_VALIDATE_EMAIL)) {
-                $result[] = $email["param"]["name"];
+        if (($email = $params["login"])) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $result[] = "login";
             }
         }
 
@@ -64,22 +64,21 @@ class Controller extends \Core\Services
         } else {
             $model = new Model;
 
-            // TODO
             $params = array(
-                array("name" => "login", "value" => $_POST["login"]),
-                array("name" => "password", "value" => $_POST["password"]),
-                array("name" => "lastname", "value" => $_POST["lastname"]),
-                array("name" => "firstname", "value" => $_POST["firstname"]),
-                array("name" => "department", "value" => $_POST["department"])
+                "login" => $_POST["login"],
+                "password" => $_POST["password"],
+                "lastname" => $_POST["lastname"],
+                "firstname" => $_POST["firstname"],
+                "department" => $_POST["department"]
             );
 
             if (count($this->validate($params)) == 0) {
-                $params[1]["value"] = password_hash($password, PASSWORD_BCRYPT);
+                $params["password"] = password_hash($password, PASSWORD_BCRYPT);
 
-                if (!$model->isUserExists($params[0]["value"])) {
+                if (!$model->isUserExists($params["login"])) {
                     if ($model->addUser($params)) {
                         $mailer = new \Library\Mailer;
-                        $mailer->setReceiver($params[0]["value"]);
+                        $mailer->setReceiver($params["login"]);
                         $mailer->setSubject('Активация аккаунта FarPost Portal');
 
                         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_OFB);
@@ -87,14 +86,14 @@ class Controller extends \Core\Services
                         $key = "123"; // TODO
 
                         $url = mcrypt_encrypt(
-                            MCRYPT_RIJNDAEL_128, 
-                            $key, 
+                            MCRYPT_RIJNDAEL_128,
+                            $key,
                             json_encode(
                                 array(
-                                    "login" => $params[0]["value"],
+                                    "login" => $params["login"],
                                     "time" => time()
                                 )
-                            ), 
+                            ),
                             MCRYPT_MODE_OFB,
                             $iv
                         );
@@ -104,10 +103,32 @@ class Controller extends \Core\Services
                         $mailer->setMessage($message);
 
                         if ($mailer->sendEmail()) {
-                            // TODO: OK
-                        } // TODO: Проблемы с мейлером
-                    } // TODO: Проблемы с БД
-                } // TODO: Логин уже существует
+                            $this->template->bindParam("login", $params["login"]);
+                            $this->template->fetch("signup.success");
+                        } else {
+                            $this->template->bindParam("alert",
+                                $this->template->getHtml("templates.alert_error",
+                                    array("text" => "Ваш аккаунт создан, но, неудалось отправить сообщение для активации.")
+                                )
+                            );
+                            $this->template->fetch("signup.index");
+                        }
+                    } else {
+                        $this->template->bindParam("alert",
+                        $this->template->getHtml("templates.alert_error",
+                                array("text" => "Проблемы с базой данных на сервере, или нет... :(")
+                            )
+                        );
+                        $this->template->fetch("signup.index");
+                    }
+                } else {
+                    $this->template->bindParam("alert",
+                        $this->template->getHtml("templates.alert_error",
+                            array("text" => "Возможно, такой логин уже зарегистрирован в системе ;(")
+                        )
+                    );
+                    $this->template->fetch("signup.index");
+                }
             }
         }
     }
@@ -129,7 +150,41 @@ class Controller extends \Core\Services
 
         if (!empty($params["login"])) {
             $model = new Model;
-            $model->activateUser($params["login"]);
+            
+            if($model->activateUser($params["login"])) {
+                $this->template->bindParam("login", $params["login"]);
+                $this->template->fetch("activate.success");
+            } else {
+                $this->template->fetch("activate.error");
+            }
+        } else {
+            $this->template->fetch("activate.error");
+        }
+    }
+
+    public function signin()
+    {
+        if (empty($_POST)) {
+            $this->template->fetch("signin.index");
+        } else {
+            $params = array(
+                "login" => $_POST["login"],
+                "password" => $_POST["password"]
+            );
+
+            $user = new \Library\User;
+            $user->setParams($params);
+
+            if ($user->userAuthentication()) {
+                $this->template->fetch("signin.success");
+            } else {
+                $this->template->bindParam("alert",
+                    $this->template->getHtml("templates.alert_error",
+                        array("text" => "Возможно, Вы указали неверные данные. Попробуйте еще раз ;)")
+                    )
+                );
+                $this->template->fetch("signin.index");
+            }
         }
     }
 }

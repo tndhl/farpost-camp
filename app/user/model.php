@@ -9,21 +9,11 @@ class Model extends \Core\Database
      */
     public function addUser($params = array())
     {
-        $attributes = array();
-        $attributes_param = array();
-        $values = array();
+        $attributes = implode(", ", array_keys($params));
+        $values = array_values($params);
+        $queryparams = str_repeat("?,", count($values) - 1);
 
-        foreach ($params as $param) {
-            $attributes[] = $param["name"];
-            $values[] = $param["value"];
-
-            $attributes_param[] = "?";
-        }
-
-        $attributes = implode(", ", $attributes);
-        $attributes_param = implode(", ", $attributes_param);
-
-        $sth = $this->prepare("INSERT INTO user ($attributes) VALUES ($attributes_param)");
+        $sth = $this->prepare("INSERT INTO user ($attributes) VALUES ($queryparams?)");
 
         if ($sth->execute($values)) {
             return true;
