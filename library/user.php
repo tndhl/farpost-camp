@@ -39,7 +39,7 @@ class User extends \Core\Database
         $hash = $_COOKIE["hash"];
 
         $sth = $this->prepare(
-            "SELECT u.login, firstname, lastname, department, reg_time, activate_time
+            "SELECT u.login, role, firstname, lastname, department, reg_time, activate_time
             FROM user u
             LEFT JOIN user_session s ON u.login LIKE s.login
             WHERE s.hash LIKE :hash"

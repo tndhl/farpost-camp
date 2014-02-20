@@ -12,6 +12,34 @@ class Controller extends \Core\Services
     );
 
     /**
+     * Создание хеша активации на основе данных пользователя
+     * @param  array $params 
+     * @return string         
+     */
+    private function createActivationHash($params)
+    {
+        $hash = json_encode(
+            array(
+                "login" => $params["login"],
+                "time" => time()
+            )
+        );
+
+        return urlencode(base64_encode($hash));
+    }
+
+    /**
+     * Расшифровка хеша активации
+     * @return array Данные пользователя для активации
+     */
+    private function decryptActivationHash($hash)
+    {        
+        $hash = base64_decode(urldecode($hash));
+
+        return (array) json_decode($hash);
+    }
+
+    /**
      * Валидация формы (\w AJAX)
      * @param  array $params Параметры формы
      * @return array Параметры, не прошедшие проверку        
@@ -73,7 +101,7 @@ class Controller extends \Core\Services
             );
 
             if (count($this->validate($params)) == 0) {
-                $params["password"] = password_hash($password, PASSWORD_BCRYPT);
+                $params["password"] = password_hash($params["password"], PASSWORD_BCRYPT);
 
                 if (!$model->isUserExists($params["login"])) {
                     if ($model->addUser($params)) {
@@ -81,24 +109,9 @@ class Controller extends \Core\Services
                         $mailer->setReceiver($params["login"]);
                         $mailer->setSubject('Активация аккаунта FarPost Portal');
 
-                        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_OFB);
-                        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-                        $key = "123"; // TODO
+                        $hash = $this->createActivationHash($params);
 
-                        $url = mcrypt_encrypt(
-                            MCRYPT_RIJNDAEL_128,
-                            $key,
-                            json_encode(
-                                array(
-                                    "login" => $params["login"],
-                                    "time" => time()
-                                )
-                            ),
-                            MCRYPT_MODE_OFB,
-                            $iv
-                        );
-                        $url = base64_encode($iv . $url);
-                        $message = 'Для активации аккаунта, пожалуйста, пройдите по ссылке - http://portal.sashashelepov.com/user/activate?code=' . $url;
+                        $message = 'Для активации аккаунта, пожалуйста, пройдите по ссылке - http://portal.sashashelepov.com/user/activate?code=' . $hash;
 
                         $mailer->setMessage($message);
 
@@ -139,14 +152,7 @@ class Controller extends \Core\Services
      */
     public function activate()
     {
-        $code = base64_decode($_REQUEST["code"]);
-
-        $key = "123"; // TODO
-        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_OFB);
-        $iv = substr($code, 0, $iv_size);
-        $code = substr($code, $iv_size);
-
-        $params = (array) json_decode(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $key, $code, MCRYPT_MODE_OFB, $iv));
+        $params = $this->decryptActivationHash($_REQUEST["code"]);
 
         if (!empty($params["login"])) {
             $model = new Model;

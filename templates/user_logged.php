@@ -1,1 +1,1 @@
-Добро пожаловать, <?php echo $params["profile"]["firstname"]; ?> (<a href="/?logout">Выйти</a>)
+Добро пожаловать, <?php echo $params["profile"]["firstname"]; ?>. Вы - <?php echo $params["profile"]["role"]; ?> (<a href="/?logout">Выйти</a>)
