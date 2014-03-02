@@ -6,13 +6,15 @@
 
     <link rel="stylesheet" href="/public/assets/stylesheets/normalize.css">
     <link rel="stylesheet/less" href="/public/assets/stylesheets/template.less?<?php print time(); ?>">
+
+    <script src="/public/assets/javascripts/jquery.min.js"></script>
 </head>
 <body>
     <div class="header">
         <div class="layout">
             <span class="logo"></span>
             <span class="user-links pull-right">
-                <a href="/user/signup" title="Регистрация">Регистрация</a> | <a href="/user/signin" title="Войти">Войти</a>
+                <?php echo $params["user"]; ?>
             </span></a>
         </div>
 

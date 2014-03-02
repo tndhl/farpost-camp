@@ -1,0 +1,1 @@
+<a href="/user/signup" title="Регистрация">Регистрация</a> | <a href="/user/signin" title="Войти">Войти</a>

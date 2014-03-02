@@ -30,6 +30,27 @@ class Template
         }
     }
 
+    public function getHtml($tpl, $params = array())
+    {
+        $tpl = explode(".", $tpl);
+        $tpl = implode("/", $tpl) . ".php";
+
+        try {
+            if (!file_exists($tpl)) {
+                throw new \Exception("Cannot find template");
+            }
+
+            ob_start();
+            require_once $tpl;
+            $templateHtml = ob_get_contents();
+            ob_end_clean();
+
+            return $templateHtml;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     public function fetch($view)
     {
         $view = APP_PATH . '/app/' . $this->component . '/views/' . $view . '.php';

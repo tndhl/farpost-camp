@@ -1,9 +1,10 @@
 @import "typography.less";
 @import "presets.less";
+@import "form.less";
 
 body {
     min-width: 1000px;
-    background-color: #e9e9e9;
+    background-color: #e5e5e5;
 }
 
 span { display: inline-block; }
@@ -20,18 +21,18 @@ span { display: inline-block; }
 
 .header {
     position: relative;
-    height: 84px;
+    height: 94px;
     background-color: #f9f9f9;
     padding: 7px 0;
 
     .logo {
         width: 127px;
-        height: 46px;
-        background-image: url(../../images/logo.png);
+        height: 56px;
+        background: url(../../images/logo.png) no-repeat center center;
     }
 
     .user-links {
-        line-height: 46px;
+        line-height: 56px;
 
         a {
             color: #262626;
@@ -73,3 +74,43 @@ span { display: inline-block; }
         }
     }
 }
+
+.alert,
+.container {
+    position: relative;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #d9d9d9;
+}
+
+.container + .container,
+.alert + .container {
+    margin-top: 30px;
+}
+
+.alert {
+    span.error {
+        position: relative;
+        background: transparent url(../../images/icon-error-64.png) no-repeat center center;
+        width: 64px;
+        height: 64px;
+    }
+
+    span.success {
+        position: relative;
+        background: transparent url(../../images/icon-success-64.png) no-repeat center center;
+        width: 64px;
+        height: 64px;
+    }
+
+    h2 {
+        position: relative;
+        display: inline-block;
+        line-height: 64px;
+        top: -21px;
+        left: 15px;
+    }
+}   
