@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Регистрация пользователя</h1>
     
-    <form method="post">
+    <form method="post" data-validate-url="/user/validate">
         <div class="inline">
             <div class="group">
                 <label for="inputLogin">Логин (E-mail) *</label>

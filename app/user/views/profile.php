@@ -1,11 +1,11 @@
 <div class="container user-profile">
     <h1><?php echo $params["title"]; ?></h1>
 
-    <div class="col-3">
+    <div class="col col-3">
         <img src="/public/images/noavatar.png" width="100%">
     </div>
 
-    <div class="col-9">
+    <div class="col col-9">
         <form method="post">
             <div class="inline">
                 <div class="group">

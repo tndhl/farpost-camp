@@ -13,7 +13,7 @@ $(document).find('form').submit(function(e) {
         $(this).text('');
     });
 
-    $form.find('input.required').each(function(){
+    $form.find('.required').each(function(){
         $(this).removeClass('invalid');
         
         params[$(this).prop("name")] = $(this).val();
@@ -23,7 +23,7 @@ $(document).find('form').submit(function(e) {
         cache: false,
         async: false,
         type: "POST",
-        url: "/user/validate",
+        url: $form.data('validate-url'),
         dataType: "json",
         data: { params: JSON.stringify(params) },
         success: function(result) {
