@@ -38,4 +38,18 @@ class LibraryProvider extends \Core\Database\Provider
         $sth->execute(array($id));
         return $sth->fetchAll(\PDO::FETCH_CLASS, "\App\Lib\Assets\Book");
     }
+
+    public function addBook($params)
+    {
+        $sth = $this->prepare(
+            "INSERT INTO lib_book (category, title, author, annotation, publisher, image)
+            VALUES (?, ?, ?, ?, ?, ?)"
+        );
+
+        if ($sth->execute(array($params["category"], $params["title"], $params["author"], $params["annotation"], $params["publisher"], $params["image"]))) {
+            return $this->lastInsertId();
+        } 
+
+        return false;
+    }
 }
