@@ -32,7 +32,9 @@
     </div>
 
     <div class="layout" role="main">
-        {component}
+        {error}
+        
+        {content}
     </div>
 
     <div class="footer">
