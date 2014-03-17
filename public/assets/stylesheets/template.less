@@ -1,6 +1,7 @@
 @import "typography.less";
 @import "presets.less";
 @import "form.less";
+@import "library.less";
 
 body {
     min-width: 1000px;
@@ -77,6 +78,8 @@ span { display: inline-block; }
 
 .alert,
 .container {
+    display: table;
+    width: 100%;
     position: relative;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -115,9 +118,20 @@ span { display: inline-block; }
     }
 }   
 
-.container {
-    display: table;
-    width: 100%;
+    .col {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        &:first-child {
+            padding: 0;
+            padding-right: 10px;
+        }
+
+        &:last-child {
+            padding: 0;
+            padding-left: 20px;
+        }
+    }
 
     .col-1,
     .col-2,
@@ -132,8 +146,6 @@ span { display: inline-block; }
     .col-11,
     .col-12 {
         display: inline-block;
-        padding-left: 10px;
-        padding-right: 10px;
         vertical-align: top;
     }
 
@@ -184,4 +196,3 @@ span { display: inline-block; }
     .col-12 {
         width: calc(~"8.3333333333333333333333333333333% * 12 - 20px");
     }
-}

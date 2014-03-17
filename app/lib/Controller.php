@@ -1,9 +1,13 @@
 <?php
 namespace App\Lib;
 
+<<<<<<< HEAD
 use Core\Services;
 
 class Controller extends Services
+=======
+class Controller extends \Core\Services
+>>>>>>> 371e20d8bc2d8d24ab0de4e448b666fa2a1acafd
 {
     public function __construct()
     {

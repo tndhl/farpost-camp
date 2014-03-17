@@ -1,7 +1,7 @@
 .user-profile {
     form {
         margin: 0;
-        
+
         label {
             font-weight: 600;
         }
@@ -34,7 +34,7 @@ form {
             margin-bottom: 5px;
         }
 
-        input {
+        input, select {
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
@@ -48,6 +48,18 @@ form {
             &.invalid {
                 border: 1px solid #e69d9d;
             }
+        }
+
+        select {
+            padding: 0;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
         }
 
         .error {
@@ -81,11 +93,7 @@ form {
     }
 
     button {
-        outline: none;
         margin-top: 30px;  
-        color: #fff;
-        padding: 7px;
-        border: 1px solid darken(#3e83eb, 5%);
-        .gradient(#3e83eb, #3375d7);
+        .btn-blue
     }
 }

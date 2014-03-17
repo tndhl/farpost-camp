@@ -129,13 +129,13 @@ class Controller extends Services
                                 ->bindParam('login', $params["login"])
                                 ->render("signup.success");
                         } else {
-                            $this->displayError('Ваш аккаунт создан, но, неудалось отправить сообщение для активации.');
+                            $this->displayAlertError('Ваш аккаунт создан, но, неудалось отправить сообщение для активации.');
                         }
                     } else {
-                        $this->displayError('Проблемы с базой данных на сервере, или нет... :(');
+                        $this->displayAlertError('Проблемы с базой данных на сервере, или нет... :(');
                     }
                 } else {
-                    $this->displayError('Возможно, такой логин уже зарегистрирован в системе ;(');
+                    $this->displayAlertError('Возможно, такой логин уже зарегистрирован в системе ;(');
                 }
             }
         }
@@ -188,7 +188,7 @@ class Controller extends Services
             if ($user->userAuthentication()) {
                 $content = $this->ViewRenderer->render('signin.success');
             } else {
-                $this->displayError('Возможно, Вы указали неверные данные. Попробуйте еще раз ;)');
+                $this->displayAlertError('Возможно, Вы указали неверные данные. Попробуйте еще раз ;)');
             }
         }
 

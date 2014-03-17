@@ -39,13 +39,22 @@ abstract class Services
      * @param  string $message ошибка
      * @return  void
      */
-    public function displayError($message)
+    public function displayAlertError($message)
     {
         $this->LayoutRenderer
             ->bindParam('error', 
                 $this->LayoutRenderer
                     ->bindParam('text', $message)
                     ->render('alert_error', false));
+    }
+
+    public function displayAlertSuccess($message)
+    {
+        $this->LayoutRenderer
+            ->bindParam('error', 
+                $this->LayoutRenderer
+                    ->bindParam('text', $message)
+                    ->render('alert_success', false));
     }
 
     public function redirect($url)

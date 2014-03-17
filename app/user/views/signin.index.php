@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Авторизация</h1>
     
-    <form method="post">
+    <form method="post" data-validate-url="/user/validate">
         <div class="group group-inline">
             <label for="inputLogin">Логин (E-mail) *</label>
             <input class="required" type="text" name="login" id="inputLogin">
