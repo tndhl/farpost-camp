@@ -29,7 +29,8 @@ class Mailer
 
     /**
      * Set mail receiver
-     * @param string $to 
+     * @param $receiver
+     * @internal param string $to
      */
     public function setReceiver($receiver)
     {

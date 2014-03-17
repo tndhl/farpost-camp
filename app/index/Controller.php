@@ -1,7 +1,9 @@
 <?php
 namespace App\Index;
 
-class Controller extends \Core\Services
+use Core\Services;
+
+class Controller extends Services
 {
     public function __construct()
     {

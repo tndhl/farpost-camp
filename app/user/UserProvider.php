@@ -1,11 +1,15 @@
 <?php
 namespace App\User;
 
-class UserProvider extends \Core\Database\Provider
+use Core\Database\Provider;
+use Utils\User\UserEntity;
+
+class UserProvider extends Provider
 {
     /**
      * Добавление нового пользователя в БД
      * @param array $params Данные пользователя
+     * @return bool
      */
     public function addUser($params = array())
     {
@@ -25,7 +29,7 @@ class UserProvider extends \Core\Database\Provider
     /**
      * Поиск пользователя по логину
      * @param  string $login Email
-     * @return array
+     * @return UserEntity
      */
     public function findUserByLogin($login)
     {
@@ -36,6 +40,7 @@ class UserProvider extends \Core\Database\Provider
         );
         $user->bindParam(":login", $login, \PDO::PARAM_STR);
         $user->execute();
+        $user->setFetchMode(\PDO::FETCH_CLASS, '\Utils\User\UserEntity');
 
         $xfields = $this->prepare(
             "SELECT id, title, alt, value, html_tag, html_tag_type
@@ -44,11 +49,10 @@ class UserProvider extends \Core\Database\Provider
         );
         $xfields->execute(array($login));
 
-        return array(
-            "data" => $user->fetch(),
-            "xfields" => $xfields->fetchAll()
-        );
+        $user = $user->fetch();
+        $user->xfields = $xfields->fetchAll();
 
+        return $user;
     }
 
     /**

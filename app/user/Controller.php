@@ -1,7 +1,11 @@
 <?php
 namespace App\User;
 
-class Controller extends \Core\Services
+use Core\Services;
+use Library\Mailer;
+use Library\User;
+
+class Controller extends Services
 {
     /**
      * Параметры формы для валидации
@@ -34,6 +38,7 @@ class Controller extends \Core\Services
 
     /**
      * Расшифровка хеша активации
+     * @param $hash
      * @return array Данные пользователя для активации
      */
     private function decryptActivationHash($hash)
@@ -45,8 +50,8 @@ class Controller extends \Core\Services
 
     /**
      * Валидация формы (\w AJAX)
-     * @param  array $params Параметры формы
-     * @return array Параметры, не прошедшие проверку        
+     * @param array|bool $params Параметры формы
+     * @return array Параметры, не прошедшие проверку
      */
     public function validate($params = false)
     {
@@ -109,7 +114,7 @@ class Controller extends \Core\Services
 
                 if (!$model->isUserExists($params["login"])) {
                     if ($model->addUser($params)) {
-                        $mailer = new \Library\Mailer;
+                        $mailer = new Mailer;
                         $mailer->setReceiver($params["login"]);
                         $mailer->setSubject('Активация аккаунта FarPost Portal');
 
@@ -177,7 +182,7 @@ class Controller extends \Core\Services
                 "password" => $_POST["password"]
             );
 
-            $user = new \Library\User;
+            $user = new User;
             $user->setParams($params);
 
             if ($user->userAuthentication()) {
@@ -194,22 +199,21 @@ class Controller extends \Core\Services
 
     public function profile($login = '')
     {
+        $user = new User();
+        $user = $user->getSignedUser();
         $UserProvider = new UserProvider();
 
         if (empty($login)) {
-            $user = new \Library\User();
-            $user = $user->getUserData();
-
             $user = $UserProvider->findUserByLogin($user["login"]);
             $pageTitle = "Ваш профиль";
         } else {
             $user = $UserProvider->findUserByLogin($login);
-            $pageTitle = "Профиль пользователя " . $user["data"]["login"];
+            $pageTitle = "Профиль пользователя " . $user->login;
         }
 
         $content = $this->ViewRenderer
-            ->bindParam('title', $pageTitle)
             ->bindParam('user', $user)
+            ->bindParam('title', $pageTitle)
             ->render('profile');
 
         $this->LayoutRenderer

@@ -1,28 +1,31 @@
 <?php
 namespace Core;
 
+use App\User\UserProvider;
+use Library\User;
+
 abstract class Services
 {
     protected $services = array();
 
     public function __construct()
     {
-        $this->LayoutRenderer = new \Core\LayoutRenderer();
-        $this->ViewRenderer = new \Core\ViewRenderer(get_class($this));
+        $this->LayoutRenderer = new LayoutRenderer();
+        $this->ViewRenderer = new ViewRenderer(get_class($this));
 
-        $user = new \Library\User;
+        $user = new User;
 
         if ($user->isUserLoggedIn()) {
+            $userProvider = new UserProvider();
+            $userEntity = $userProvider->findUserByLogin($user->getSignedUser()["login"]);
+
             $this->LayoutRenderer
-                ->bindParam("user", 
-                    $this->LayoutRenderer
-                        ->bindParam('profile', $user->getUserData())
-                        ->render('user_logged', false));
+                ->bindParam("user", $userEntity)
+                ->bindParam("userlinks", $this->LayoutRenderer->render('user_logged', false));
         } else {
             $this->LayoutRenderer
-                ->bindParam("user", 
-                    $this->LayoutRenderer->render('user_links', false)
-                );
+                ->bindParam('userlinks', $this->LayoutRenderer->render('user_links', false))
+                ->bindParam('user', null);
         }
 
         if (isset($_GET["logout"])) {
@@ -61,5 +64,7 @@ abstract class Services
         if (isset($this->services[$key])) {
             return $this->services[$key];
         }
+
+        return false;
     }
 }

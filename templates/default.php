@@ -14,7 +14,7 @@
         <div class="layout">
             <span class="logo"></span>
             <span class="user-links pull-right">
-                <?php echo $params["user"]; ?>
+                <?php echo $params["userlinks"]; ?>
             </span></a>
         </div>
 

@@ -1,7 +1,7 @@
-$(document).find('form').submit(function(e) {
+$(document).find('form').submit(function() {
     var $form = $(this);
     var error = {
-        msg: 'Поле обязательно для заполнения', 
+        msg: 'Поле обязательно для заполнения',
         inputClass: 'invalid',
         errorClass: 'error'
     };
@@ -15,7 +15,7 @@ $(document).find('form').submit(function(e) {
 
     $form.find('input.required').each(function(){
         $(this).removeClass('invalid');
-        
+
         params[$(this).prop("name")] = $(this).val();
     });
 
@@ -27,17 +27,14 @@ $(document).find('form').submit(function(e) {
         dataType: "json",
         data: { params: JSON.stringify(params) },
         success: function(result) {
-            if (result.length > 0) {
-                for (var key in result) {
-                    $form.find('[name=' + result[key] + ']').addClass(error.inputClass);
-                    $form.find('[name=' + result[key] + ']').parent().find('span.' + error.errorClass).text(error.msg);
-                }
+            if (result.length > 0) for (var key in result) {
+                $form.find('[name=' + result[key] + ']').addClass(error.inputClass);
+                $form.find('[name=' + result[key] + ']').parent().find('span.' + error.errorClass).text(error.msg);
             } else {
                 isNotFailed = true;
             }
         }
     });
 
-    if (isNotFailed) return true;
-    else return false;
+    return !!isNotFailed;
 });

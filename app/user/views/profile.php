@@ -10,16 +10,16 @@
             <div class="inline">
                 <div class="group">
                     <label for="inputLastname">Фамилия</label>
-                    <span class="editable" data-type="text" data-name="lastname"><?php echo $params["user"]["data"]["lastname"]; ?></span>
+                    <span class="editable" data-type="text" data-name="lastname"><?php echo $params["user"]->lastname; ?></span>
                 </div>
 
                 <div class="group">
                     <label for="inputFirstname">Имя</label>
-                    <span class="editable" data-type="text" data-name="lastname"><?php echo $params["user"]["data"]["firstname"]; ?></span>
+                    <span class="editable" data-type="text" data-name="lastname"><?php echo $params["user"]->firstname; ?></span>
                 </div>
             </div>
 
-            <?php foreach ($params["user"]["xfields"] as $xfield): ?>
+            <?php foreach ($params["user"]->xfields as $xfield): ?>
                 <div class="group">
                     <label for="input<?php echo $xfield["alt"]; ?>"><?php echo $xfield["title"]; ?></label>
                     <span class="editable" data-fid="<?php echo $xfield["id"]; ?>"><?php echo $xfield["value"]; ?></span>

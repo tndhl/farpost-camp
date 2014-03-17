@@ -5,7 +5,7 @@ class LayoutRenderer extends Renderer
 {
     public function render($template = 'default', $out = true)
     {
-        $params = $this->params;
+        $params = self::$params;
 
         ob_start();
         require_once APP_PATH . '/templates/' . $template . '.php';

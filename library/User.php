@@ -1,7 +1,10 @@
 <?php
 namespace Library;
 
-class User extends \Core\Database\Provider
+use Core\Database\Provider;
+use Utils\User\UserEntity;
+
+class User extends Provider
 {
     private $params = array();
 
@@ -34,12 +37,15 @@ class User extends \Core\Database\Provider
         return false;
     }
 
-    public function getUserData()
+    /**
+     * @return array
+     */
+    public function getSignedUser()
     {
         $hash = $_COOKIE["hash"];
 
         $sth = $this->prepare(
-            "SELECT u.login, role, firstname, lastname, department, reg_time, activate_time
+            "SELECT u.login, role
             FROM user u
             LEFT JOIN user_session s ON u.login LIKE s.login
             WHERE s.hash LIKE :hash"
