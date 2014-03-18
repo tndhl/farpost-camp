@@ -3,6 +3,11 @@ namespace Core;
 
 class LayoutRenderer extends Renderer
 {
+    /**
+     * @param string $template Имя файла шаблона
+     * @param bool $out Если TRUE, выведет полученный HTML на экран. Иначе, вернет HTML.
+     * @return string|void
+     */
     public function render($template = 'default', $out = true)
     {
         $params = self::$params;

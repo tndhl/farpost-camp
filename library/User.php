@@ -21,7 +21,7 @@ class User extends Provider
             $sth = $this->prepare(
                 "SELECT u.login, s.hash, firstname, lastname, department, reg_time, activate_time
                 FROM user u
-                LEFT JOIN user_session s ON u.login LIKE s.login
+                LEFT JOIN user_session s ON u.id = s.uid
                 WHERE s.hash LIKE :hash
                 LIMIT 1"
             );
@@ -45,9 +45,9 @@ class User extends Provider
         $hash = $_COOKIE["hash"];
 
         $sth = $this->prepare(
-            "SELECT u.login, role
+            "SELECT u.login
             FROM user u
-            LEFT JOIN user_session s ON u.login LIKE s.login
+            LEFT JOIN user_session s ON u.id LIKE s.uid
             WHERE s.hash LIKE :hash"
         );
 
@@ -60,7 +60,7 @@ class User extends Provider
     public function userAuthentication()
     {
         $query = "
-            SELECT login, password
+            SELECT id, login, password
             FROM user
             WHERE login LIKE :login
             AND activate_time IS NOT NULL
@@ -74,17 +74,17 @@ class User extends Provider
         $result = $sth->fetch();
 
         if (!empty($result["login"])) {
-            if (password_verify($this->params["password"], $result["password"])) {   
+            if (password_verify($this->params["password"], $result["password"])) {
                 $hash = substr($result["password"], 10, 20);
-                $login = $this->params["login"];
+                $uid = $result["id"];
 
                 $query = "
-                    INSERT INTO user_session (login, hash) VALUES (?, ?)
+                    INSERT INTO user_session (uid, hash) VALUES (?, ?)
                     ON DUPLICATE KEY UPDATE log_time = NOW()
                 ";
 
                 $sth = $this->prepare($query);
-                $sth->execute(array($login, $hash));
+                $sth->execute(array($uid, $hash));
 
                 @setcookie("hash", $hash, time() + 3600, "/");
 
@@ -100,7 +100,7 @@ class User extends Provider
         $hash = $_COOKIE["hash"];
         $sth = $this->prepare("DELETE FROM user_session WHERE hash LIKE ?");
         $sth->execute(array($hash));
-        
+
         @setcookie("hash", "", time() - 3600, "/");
     }
 }

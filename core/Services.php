@@ -3,6 +3,7 @@ namespace Core;
 
 use App\User\UserProvider;
 use Library\User;
+use Utils\User\UserEntity;
 
 abstract class Services
 {
@@ -25,7 +26,7 @@ abstract class Services
         } else {
             $this->LayoutRenderer
                 ->bindParam('userlinks', $this->LayoutRenderer->render('user_links', false))
-                ->bindParam('user', null);
+                ->bindParam('user', new UserEntity());
         }
 
         if (isset($_GET["logout"])) {

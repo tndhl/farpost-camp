@@ -1,13 +1,9 @@
 <?php
 namespace App\Lib;
 
-<<<<<<< HEAD
 use Core\Services;
 
 class Controller extends Services
-=======
-class Controller extends \Core\Services
->>>>>>> 371e20d8bc2d8d24ab0de4e448b666fa2a1acafd
 {
     public function __construct()
     {
@@ -97,11 +93,11 @@ class Controller extends \Core\Services
 
     public function addcategory()
     {
-        $content = $this->ViewRenderer->render('addbook');
+        $content = $this->ViewRenderer->render('addcategory');
 
         if (!empty($_POST)) {
             if (count($this->addcategory_validate($_POST)) > 0) {
-                $this->displayError("Пожалуйста, заполните все необходимые поля.");
+                $this->displayAlertError("Пожалуйста, заполните все необходимые поля.");
             }
         }
 

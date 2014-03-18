@@ -11,6 +11,11 @@ class ViewRenderer extends Renderer
         $this->componentViewDirectory = APP_PATH . '/' . implode("/", $this->componentViewDirectory);
     }
 
+    /**
+     * @param string $view Имя файла представления
+     * @param bool $out Если TRUE, выведет полученный HTML на экран. Иначе, вернет HTML.
+     * @return string|void
+     */
     public function render($view, $out = false)
     {
         $params = self::$params;

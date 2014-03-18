@@ -1,13 +1,9 @@
 <?php
 namespace App\Lib;
 
-<<<<<<< HEAD
 use Core\Database\Provider;
 
 class LibraryProvider extends Provider
-=======
-class LibraryProvider extends \Core\Database\Provider
->>>>>>> 371e20d8bc2d8d24ab0de4e448b666fa2a1acafd
 {
     public function getCategoryList()
     {
@@ -42,11 +38,7 @@ class LibraryProvider extends \Core\Database\Provider
         );
 
         $sth->execute(array($id));
-<<<<<<< HEAD
         return $sth->fetchAll(\PDO::FETCH_CLASS, '\Utils\Library\BookEntity');
-=======
-        return $sth->fetchAll(\PDO::FETCH_CLASS, "\App\Lib\Assets\Book");
->>>>>>> 371e20d8bc2d8d24ab0de4e448b666fa2a1acafd
     }
 
     public function addBook($params)

@@ -14,8 +14,8 @@ namespace Utils\User;
  */
 class UserEntity
 {
+    public $id;
     public $login;
-    public $role;
     public $firstname;
     public $lastname;
     public $department;
@@ -24,11 +24,13 @@ class UserEntity
     public $xfields;
 
     /**
+     * @param string $role
      * @return bool
      */
-    public function isAdmin()
+    public function hasRole($role)
     {
-        // return !!RoleModel::isAdminRole($this->role);
-        return false;
+        $RoleModel = new RoleModel();
+
+        return !!$RoleModel->hasUserRole($this->id, $role);
     }
 }

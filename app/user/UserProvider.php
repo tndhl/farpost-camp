@@ -34,22 +34,22 @@ class UserProvider extends Provider
     public function findUserByLogin($login)
     {
        $user = $this->prepare(
-            "SELECT login, firstname, lastname, department, reg_time, activate_time
+            "SELECT id, login, firstname, lastname, department, reg_time, activate_time
             FROM user
             WHERE login LIKE :login"
         );
         $user->bindParam(":login", $login, \PDO::PARAM_STR);
         $user->execute();
         $user->setFetchMode(\PDO::FETCH_CLASS, '\Utils\User\UserEntity');
+        $user = $user->fetch();
 
         $xfields = $this->prepare(
             "SELECT id, title, alt, value, html_tag, html_tag_type
             FROM user_field
-            LEFT JOIN user_field_value ON user_field.id = user_field_value.fid AND user_field_value.login = ?"
+            LEFT JOIN user_field_value ON user_field.id = user_field_value.fid AND user_field_value.uid = ?"
         );
-        $xfields->execute(array($login));
+        $xfields->execute(array($user->id));
 
-        $user = $user->fetch();
         $user->xfields = $xfields->fetchAll();
 
         return $user;
