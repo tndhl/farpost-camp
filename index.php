@@ -1,6 +1,5 @@
 <?php
 namespace Core;
-use Core\Dispatcher;
 
 error_reporting(-1);
 

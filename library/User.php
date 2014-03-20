@@ -2,7 +2,6 @@
 namespace Library;
 
 use Core\Database\Provider;
-use Utils\User\UserEntity;
 
 class User extends Provider
 {
