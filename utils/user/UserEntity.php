@@ -31,6 +31,13 @@ class UserEntity
     {
         $RoleModel = new RoleModel();
 
-        return !!$RoleModel->hasUserRole($this->id, $role);
+        return $RoleModel->hasUserRole($this->id, $role);
+    }
+
+    public function getRoles()
+    {
+        $RoleModel = new RoleModel();
+
+        return $RoleModel->getUserRoles($this->id);
     }
 }

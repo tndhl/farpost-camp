@@ -3,6 +3,13 @@
 
     <div class="col col-3">
         <img src="/public/images/noavatar.png" width="100%">
+
+        <strong>Роли</strong>
+        <ul>
+            <?php foreach ($params["user"]->getRoles() as $role): ?>
+                <li><?= $role["name"]; ?></li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 
     <div class="col col-9">
@@ -10,12 +17,14 @@
             <div class="inline">
                 <div class="group">
                     <label for="inputLastname">Фамилия</label>
-                    <span class="editable" data-type="text" data-name="lastname"><?= $params["user"]->lastname; ?></span>
+                    <span class="editable" data-type="text"
+                          data-name="lastname"><?= $params["user"]->lastname; ?></span>
                 </div>
 
                 <div class="group">
                     <label for="inputFirstname">Имя</label>
-                    <span class="editable" data-type="text" data-name="lastname"><?= $params["user"]->firstname; ?></span>
+                    <span class="editable" data-type="text"
+                          data-name="lastname"><?= $params["user"]->firstname; ?></span>
                 </div>
             </div>
 
