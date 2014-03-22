@@ -41,4 +41,22 @@ class RoleModel
             return false;
         }
     }
+
+    /**
+     * @param $uid
+     * @return array
+     */
+    public function getUserRoles($uid)
+    {
+        $sth = $this->pdo->prepare(
+            "SELECT uid, rid, name
+            FROM user_role ur
+            LEFT JOIN role r ON r.id = ur.rid
+            WHERE uid = ?"
+        );
+
+        $sth->execute(array($uid));
+
+        return $sth->fetchAll();
+    }
 }

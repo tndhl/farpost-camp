@@ -20,6 +20,12 @@ class UserProvider extends Provider
         $sth = $this->prepare("INSERT INTO user ($attributes) VALUES ($queryparams?)");
 
         if ($sth->execute($values)) {
+            $uid = $this->lastInsertId();
+            $rid = 2; // Роль: Пользователь
+
+            $sth = $this->prepare("INSERT INTO user_role (uid, rid) VALUES (?, ?)");
+            $sth->execute(array($uid, $rid));
+
             return true;
         }
 
