@@ -20,6 +20,15 @@ class Controller extends Services
         $this->LayoutRenderer->bindParam('content', $content)->render();
     }
 
+    public function book($id)
+    {
+        $content = $this->ViewRenderer
+            ->bindParam('book', $this->lib->findBookById($id))
+            ->render('book');
+
+        $this->LayoutRenderer->bindParam('content', $content)->render();
+    }
+
     public function category($id)
     {
         $content = $this->ViewRenderer
@@ -117,7 +126,7 @@ class Controller extends Services
         }
 
         $result = array();
-        
+
         foreach ($params as $attribute => $value) {
             if (in_array($attribute, $required_params)) {
                 if (strlen($value) == 0) {

@@ -54,4 +54,18 @@ class LibraryProvider extends Provider
 
         return false;
     }
+
+    public function findBookById($id)
+    {
+        $sth = $this->prepare(
+            "SELECT id, category, title, author, annotation, publisher, image
+            FROM lib_book
+            WHERE id = ?"
+        );
+
+        $sth->execute(array($id));
+        $sth->setFetchMode(\PDO::FETCH_CLASS, '\Utils\Library\BookEntity');
+
+        return $sth->fetch();
+    }
 }

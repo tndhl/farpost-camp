@@ -10,7 +10,11 @@
             <div class="col col-6">
                 <?php for ($i = 0; $i < count($params["books"]); $i = $i + 2): ?>
                     <div class="book">
-                        <div class="image"><img src="/public/images/books/<?= $params["books"][$i]->image; ?>"></div>
+                        <div class="image">
+                            <a href="/lib/book/<?= $params["books"][$i]->id; ?>">
+                                <img src="/public/images/books/<?= $params["books"][$i]->image; ?>">
+                            </a>
+                        </div>
                         <div class="description">
                             <div><span>Название:</span> <?= $params["books"][$i]->title; ?></div>
                             <div><span>Автор:</span> <?= $params["books"][$i]->author; ?></div>
@@ -22,7 +26,11 @@
             <div class="col col-6">
                 <?php for ($i = 1; $i < count($params["books"]); $i = $i + 2): ?>
                     <div class="book">
-                        <div class="image"><img src="/public/images/books/<?= $params["books"][$i]->image; ?>"></div>
+                        <div class="image">
+                            <a href="/lib/book/<?= $params["books"][$i]->id; ?>">
+                                <img src="/public/images/books/<?= $params["books"][$i]->image; ?>">
+                            </a>
+                        </div>
                         <div class="description">
                             <div><span>Название:</span> <?= $params["books"][$i]->title; ?></div>
                             <div><span>Автор:</span> <?= $params["books"][$i]->author; ?></div>
