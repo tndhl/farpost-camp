@@ -21,8 +21,8 @@ class Controller extends Services
 
     /**
      * Создание хеша активации на основе данных пользователя
-     * @param  array $params 
-     * @return string         
+     * @param  array $params
+     * @return string
      */
     private function createActivationHash($params)
     {
@@ -42,10 +42,10 @@ class Controller extends Services
      * @return array Данные пользователя для активации
      */
     private function decryptActivationHash($hash)
-    {        
+    {
         $hash = base64_decode(urldecode($hash));
 
-        return (array) json_decode($hash);
+        return (array)json_decode($hash);
     }
 
     /**
@@ -147,7 +147,7 @@ class Controller extends Services
 
     /**
      * Активация аккаунта
-     * @return void 
+     * @return void
      */
     public function activate()
     {
@@ -155,8 +155,8 @@ class Controller extends Services
 
         if (!empty($params["login"])) {
             $model = new UserProvider();
-            
-            if($model->activateUser($params["login"])) {
+
+            if ($model->activateUser($params["login"])) {
                 $content = $this->ViewRenderer
                     ->bindParam('login', $params["login"])
                     ->render('activate.success');
@@ -175,7 +175,7 @@ class Controller extends Services
     public function signin()
     {
         $content = $this->ViewRenderer->render('signin.index');
-        
+
         if (!empty($_POST)) {
             $params = array(
                 "login" => $_POST["login"],

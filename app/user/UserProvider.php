@@ -39,7 +39,7 @@ class UserProvider extends Provider
      */
     public function findUserByLogin($login)
     {
-       $user = $this->prepare(
+        $user = $this->prepare(
             "SELECT id, login, firstname, lastname, department, reg_time, activate_time
             FROM user
             WHERE login LIKE :login"
@@ -63,8 +63,8 @@ class UserProvider extends Provider
 
     /**
      * Проверка на существование пользователя
-     * @param  string  $login E-mail
-     * @return boolean        
+     * @param  string $login E-mail
+     * @return boolean
      */
     public function isUserExists($login)
     {

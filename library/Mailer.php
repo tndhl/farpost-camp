@@ -11,7 +11,7 @@ class Mailer
 
     /**
      * Set title of sender
-     * @param string $sender 
+     * @param string $sender
      */
     public function setSenderTitle($sender)
     {
@@ -20,7 +20,7 @@ class Mailer
 
     /**
      * Set email to reply
-     * @param string $email 
+     * @param string $email
      */
     public function setReplyEmail($email)
     {
@@ -39,7 +39,7 @@ class Mailer
 
     /**
      * Set email subject
-     * @param string $subject 
+     * @param string $subject
      */
     public function setSubject($subject)
     {
@@ -48,7 +48,7 @@ class Mailer
 
     /**
      * Set email text
-     * @param string $message 
+     * @param string $message
      */
     public function setMessage($message)
     {
@@ -75,5 +75,5 @@ class Mailer
         }
 
         return false;
-    }    
+    }
 }

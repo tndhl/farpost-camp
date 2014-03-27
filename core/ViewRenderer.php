@@ -5,7 +5,8 @@ class ViewRenderer extends Renderer
 {
     private $componentViewDirectory;
 
-    public function __construct($component) {
+    public function __construct($component)
+    {
         $this->componentViewDirectory = explode("\\", strtolower(str_replace("\Controller", "", $component)));
         $this->componentViewDirectory[] = "views";
         $this->componentViewDirectory = APP_PATH . '/' . implode("/", $this->componentViewDirectory);

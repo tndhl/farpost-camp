@@ -2,7 +2,7 @@
 
 <div class="container">
     <h1>Авторизация</h1>
-    
+
     <form method="post" data-validate-url="/user/validate">
         <div class="group group-inline">
             <label for="inputLogin">Логин (E-mail) *</label>
@@ -15,7 +15,7 @@
             <input class="required" type="password" name="password" id="inputPassword">
             <span class="error"></span>
         </div>
-    
+
         <button type="submit">Продолжить</button>
     </form>
 </div>

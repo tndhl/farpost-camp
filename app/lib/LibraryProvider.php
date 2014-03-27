@@ -58,9 +58,10 @@ class LibraryProvider extends Provider
                 $params["image"],
                 $params["ebook"],
                 $params["book"]
-            ))) {
+            ))
+        ) {
             return $this->lastInsertId();
-        } 
+        }
 
         return false;
     }

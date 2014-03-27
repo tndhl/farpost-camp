@@ -1,12 +1,14 @@
 <?php
 namespace Core;
 
-abstract class Renderer {
+abstract class Renderer
+{
     protected static $params;
 
     abstract public function render($content, $out);
 
-    public static function getParams() {
+    public static function getParams()
+    {
         return self::$params;
     }
 

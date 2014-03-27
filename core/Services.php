@@ -43,7 +43,7 @@ abstract class Services
     public function displayAlertError($message)
     {
         $this->LayoutRenderer
-            ->bindParam('error', 
+            ->bindParam('error',
                 $this->LayoutRenderer
                     ->bindParam('text', $message)
                     ->render('alert_error', false));
@@ -52,7 +52,7 @@ abstract class Services
     public function displayAlertSuccess($message)
     {
         $this->LayoutRenderer
-            ->bindParam('error', 
+            ->bindParam('error',
                 $this->LayoutRenderer
                     ->bindParam('text', $message)
                     ->render('alert_success', false));
@@ -63,7 +63,7 @@ abstract class Services
         @header("Location: " . $url);
         exit;
     }
-    
+
     public function __set($key, $value)
     {
         $this->services[$key] = $value;

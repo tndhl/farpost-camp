@@ -50,7 +50,7 @@
             <input type="checkbox" name="ebook" class="extra_param" id="checkboxEbook" value="1"> Электронная книга
         </label>
 
-        <br /><br />
+        <br/><br/>
 
         <div class="group hidden" id="ebook_loader">
             <label for="inputBook">Файл книги *</label>
