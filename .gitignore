@@ -1,1 +1,3 @@
 tests/phpunit.phar
+public/books/*
+public/images/books/*
