@@ -26,6 +26,11 @@ class UserProvider extends Provider
             $sth = $this->prepare("INSERT INTO user_role (uid, rid) VALUES (?, ?)");
             $sth->execute(array($uid, $rid));
 
+            $sth = $this->prepare("UPDATE user SET reg_ip = INET_ATON(:reg_ip) WHERE id = :uid");
+            $sth->bindParam(':reg_ip', $_SERVER["REMOTE_ADDR"]);
+            $sth->bindParam(':uid', $uid);
+            $sth->execute();
+
             return true;
         }
 

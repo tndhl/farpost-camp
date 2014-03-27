@@ -1,6 +1,7 @@
 <?php
 namespace Utils\Library;
 
+
 class BookEntity
 {
     public $id;
@@ -13,8 +14,38 @@ class BookEntity
     public $is_ebook;
     public $ebook_file;
 
-    public function getEbookFilePath()
+    public function isOwned()
     {
-        return '/public/books/' . $this->ebook_file;
+        $queue = new QueueModel();
+
+        return $queue->isBookOwned($this->id);
+    }
+
+    public function getQueueStatus()
+    {
+        $queue = new QueueModel();
+
+        return $queue->getBookStatus($this->id);
+    }
+
+    public function getCurrentOwner()
+    {
+        $queue = new QueueModel();
+
+        return $queue->getBookCurrentOwner($this->id);
+    }
+
+    public function getTakingDate()
+    {
+        $queue = new QueueModel();
+
+        return $queue->getBookTakingDate($this->id);
+    }
+
+    public function getQueueLength()
+    {
+        $queue = new QueueModel();
+
+        return $queue->getBookQueueLength($this->id);
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Lib;
 
 use Core\Services;
+use Utils\Library\QueueModel;
 
 class Controller extends Services
 {
@@ -160,5 +161,31 @@ class Controller extends Services
             echo json_encode($result);
             exit;
         }
+    }
+
+    public function add_queue($book_id, $user_id, $is_owner = 0)
+    {
+        $queue = new QueueModel();
+
+        if ($queue->addToQueue($book_id, $user_id, $is_owner)) {
+            $this->displayAlertSuccess("Вы успешно добавлены в очередь на книгу. <a href='/lib/book/$book_id'>Вернуться назад</a>");
+        } else {
+            $this->displayAlertError('Возникла ошибка. Возможно, проблемы с БД.');
+        }
+
+        $this->LayoutRenderer->render();
+    }
+
+    public function remove_queue($book_id, $user_id)
+    {
+        $queue = new QueueModel();
+
+        if ($queue->removeFromQueue($book_id, $user_id)) {
+            $this->displayAlertSuccess("Вы успешно вышли из очереди на книгу. <a href='/lib/book/$book_id'>Вернуться назад</a>");
+        } else {
+            $this->displayAlertError('Возникла ошибка. Возможно, проблемы с БД.');
+        }
+
+        $this->LayoutRenderer->render();
     }
 }

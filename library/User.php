@@ -76,14 +76,15 @@ class User extends Provider
             if (password_verify($this->params["password"], $result["password"])) {
                 $hash = substr($result["password"], 10, 20);
                 $uid = $result["id"];
+                $ip = $_SERVER["REMOTE_ADDR"];
 
                 $query = "
-                    INSERT INTO user_session (uid, hash) VALUES (?, ?)
+                    INSERT INTO user_session (uid, hash, ip) VALUES (?, ?, INET_ATON(?))
                     ON DUPLICATE KEY UPDATE log_time = NOW()
                 ";
 
                 $sth = $this->prepare($query);
-                $sth->execute(array($uid, $hash));
+                $sth->execute(array($uid, $hash, $ip));
 
                 @setcookie("hash", $hash, time() + 3600, "/");
 

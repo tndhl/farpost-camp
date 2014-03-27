@@ -13,9 +13,9 @@
 <div class="header">
     <div class="layout">
         <span class="logo"></span>
-            <span class="user-links pull-right">
-                <?php echo $params["userlinks"]; ?>
-            </span></a>
+        <span class="user-links pull-right">
+            <?= $params["userlinks"]; ?>
+        </span>
     </div>
 
     <div class="top-nav">

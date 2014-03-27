@@ -1,5 +1,6 @@
 <?php
 namespace Utils\User;
+use Core\Database\Provider;
 
 /**
  * Предоставление удобного доступа к пользовательским данным.
@@ -35,5 +36,24 @@ class UserEntity
         $RoleModel = new RoleModel();
 
         return $RoleModel->getUserRoles($this->id);
+    }
+
+    public function isInBookQueue($book_id)
+    {
+        $pdo = new Provider();
+
+        $sth = $pdo->prepare(
+            "SELECT book_id
+            FROM lib_queue
+            WHERE user_id = ?
+            AND book_id = ?"
+        );
+        $sth->execute(array($this->id, $book_id));
+
+        if ($sth->rowCount() == 0) {
+            return false;
+        }
+
+        return true;
     }
 }
