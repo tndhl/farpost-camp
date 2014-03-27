@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexander
- * Date: 3/18/14
- * Time: 1:06 AM
- */
-
 namespace Utils\User;
 
 /**
@@ -34,6 +27,9 @@ class UserEntity
         return $RoleModel->hasUserRole($this->id, $role);
     }
 
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         $RoleModel = new RoleModel();

@@ -13,6 +13,14 @@ span {
   display: inline-block;
 }
 
+.btn-back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  .btn-blue;
+  padding: 3px;
+}
+
 .layout {
   display: table;
   position: relative;
@@ -124,6 +132,11 @@ span {
 
 .row {
   display: table;
+  width: 100%;
+}
+
+.row + .row {
+  margin-top: 20px;
 }
 
 .col {

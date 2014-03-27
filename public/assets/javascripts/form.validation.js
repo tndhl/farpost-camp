@@ -7,6 +7,7 @@ $(document).find('form').submit(function() {
     };
 
     var params = {};
+    var extra_params = {};
     var isNotFailed = false;
 
     $form.find('span.error').each(function(){
@@ -19,13 +20,21 @@ $(document).find('form').submit(function() {
         params[$(this).prop("name")] = $(this).val();
     });
 
+    $form.find('.extra_param').each(function(){
+        if ($(this).is(":checkbox")) {
+            extra_params[$(this).prop("name")] = $(this).is(':checked');
+        } else {
+            extra_params[$(this).prop("name")] = $(this).val();
+        }
+    });
+
     $.ajax({
         cache: false,
         async: false,
         type: "POST",
         url: $form.data('validate-url'),
         dataType: "json",
-        data: { params: JSON.stringify(params) },
+        data: { params: JSON.stringify(params), extra: JSON.stringify(extra_params) },
         success: function(result) {
             if (result.length > 0) for (var key in result) {
                 $form.find('[name=' + result[key] + ']').addClass(error.inputClass);

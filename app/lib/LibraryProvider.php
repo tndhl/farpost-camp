@@ -32,7 +32,7 @@ class LibraryProvider extends Provider
     public function findBooksByCategoryId($id)
     {
         $sth = $this->prepare(
-            "SELECT id, category, title, author, annotation, publisher, image
+            "SELECT id, category, title, author, annotation, publisher, image, is_ebook, ebook_file
             FROM lib_book
             WHERE category = ?"
         );
@@ -44,11 +44,21 @@ class LibraryProvider extends Provider
     public function addBook($params)
     {
         $sth = $this->prepare(
-            "INSERT INTO lib_book (category, title, author, annotation, publisher, image)
-            VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO lib_book (category, title, author, annotation, publisher, image, is_ebook, ebook_file)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         );
 
-        if ($sth->execute(array($params["category"], $params["title"], $params["author"], $params["annotation"], $params["publisher"], $params["image"]))) {
+        if ($sth->execute(
+            array(
+                $params["category"],
+                $params["title"],
+                $params["author"],
+                $params["annotation"],
+                $params["publisher"],
+                $params["image"],
+                $params["ebook"],
+                $params["book"]
+            ))) {
             return $this->lastInsertId();
         } 
 
@@ -58,7 +68,7 @@ class LibraryProvider extends Provider
     public function findBookById($id)
     {
         $sth = $this->prepare(
-            "SELECT id, category, title, author, annotation, publisher, image
+            "SELECT id, category, title, author, annotation, publisher, image, is_ebook, ebook_file
             FROM lib_book
             WHERE id = ?"
         );

@@ -1,7 +1,8 @@
 <?php
 namespace Utils\Library;
 
-class BookEntity {
+class BookEntity
+{
     public $id;
     public $category;
     public $title;
@@ -9,4 +10,11 @@ class BookEntity {
     public $annotation;
     public $publisher;
     public $image;
+    public $is_ebook;
+    public $ebook_file;
+
+    public function getEbookFilePath()
+    {
+        return '/public/books/' . $this->ebook_file;
+    }
 }

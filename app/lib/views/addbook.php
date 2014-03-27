@@ -1,14 +1,14 @@
 <div class="container">
     <h1>Форма добавления книги</h1>
 
-    <form method="post" enctype="multipart/form-data" action="/lib/addbook" data-validate-url="/lib/addbook_validate">
+    <form method="post" enctype="multipart/form-data" action="/lib/addbook" data-validate-url="/lib/validate">
         <div class="inline">
             <div class="group">
                 <label for="selectCategory">Категория *</label>
                 <select class="required" id="selectCategory" name="category">
-                <?php foreach ($params["categories"] as $category): ?>
-                    <option value="<?php echo $category["id"]; ?>"><?php echo $category["title"]; ?></option>
-                <?php endforeach; ?>
+                    <?php foreach ($params["categories"] as $category): ?>
+                        <option value="<?php echo $category["id"]; ?>"><?php echo $category["title"]; ?></option>
+                    <?php endforeach; ?>
                 </select>
                 <span class="error"></span>
             </div>
@@ -46,8 +46,29 @@
             <span class="error"></span>
         </div>
 
+        <label for="checkboxEbook">
+            <input type="checkbox" name="ebook" class="extra_param" id="checkboxEbook" value="1"> Электронная книга
+        </label>
+
+        <br /><br />
+
+        <div class="group hidden" id="ebook_loader">
+            <label for="inputBook">Файл книги *</label>
+            <input class="required" id="inputBook" name="book" type="file">
+            <span class="error"></span>
+        </div>
+
         <button type="submit">Добавить книгу</button>
     </form>
 </div>
 
 <script src="/public/assets/javascripts/form.validation.js"></script>
+<script>
+    $('#checkboxEbook').click(function () {
+        if ($(this).is(':checked')) {
+            $('#ebook_loader').removeClass('hidden');
+        } else {
+            $('#ebook_loader').addClass('hidden');
+        }
+    })
+</script>

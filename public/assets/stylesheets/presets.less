@@ -1,47 +1,51 @@
 .border-radius(@topleft: 3px, @topright: 3px, @bottomright: 3px, @bottomleft: 3px) {
-    -moz-border-radius: @topleft @topright @bottomright @bottomleft;
-    -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
-    border-radius: @topleft @topright @bottomright @bottomleft;
+  -moz-border-radius: @topleft @topright @bottomright @bottomleft;
+  -webkit-border-radius: @topleft @topright @bottomright @bottomleft;
+  border-radius: @topleft @topright @bottomright @bottomleft;
 }
 
 .box-shadow(@color) {
-    -moz-box-shadow: 0 2px 3px @color;
-    -webkit-box-shadow: 0 2px 3px @color;
-    box-shadow: 0 2px 3px @color;
+  -moz-box-shadow: 0 2px 3px @color;
+  -webkit-box-shadow: 0 2px 3px @color;
+  box-shadow: 0 2px 3px @color;
 }
 
 .double-border(@color1, @color2) {
-    border-bottom: 1px solid darken(@color2, 2%);
-    -moz-box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
-    -webkit-box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
-    box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
+  border-bottom: 1px solid darken(@color2, 2%);
+  -moz-box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
+  -webkit-box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
+  box-shadow: inset 0 -1px 0 lighten(@color1, 2%);
 }
 
 .gradient(@startcolor, @endcolor) {
-    background: @startcolor;
-    background: -moz-linear-gradient(top, @startcolor 0%, @endcolor 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @startcolor), color-stop(100%, @endcolor));
-    background: -webkit-linear-gradient(top, @startcolor 0%, @endcolor 100%);
-    background: -o-linear-gradient(top, @startcolor 0%, @endcolor 100%);
-    background: -ms-linear-gradient(top, @startcolor 0%, @endcolor 100%);
-    background: linear-gradient(to bottom, @startcolor 0% @endcolor 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '@startcolor', endColorstr = '@endcolor', GradientType=0);
+  background: @startcolor;
+  background: -moz-linear-gradient(top, @startcolor 0%, @endcolor 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @startcolor), color-stop(100%, @endcolor));
+  background: -webkit-linear-gradient(top, @startcolor 0%, @endcolor 100%);
+  background: -o-linear-gradient(top, @startcolor 0%, @endcolor 100%);
+  background: -ms-linear-gradient(top, @startcolor 0%, @endcolor 100%);
+  background: linear-gradient(to bottom, @startcolor 0% @endcolor 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@startcolor', endColorstr='@endcolor', GradientType=0);
 }
 
 .pull-right {
-    float: right;
+  float: right;
 }
 
 .pull-left {
-    float: left;
+  float: left;
+}
+
+.hidden {
+  display: none;
 }
 
 .btn-blue() {
-    display: block;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    padding: 7px;
-    border: 1px solid darken(#3e83eb, 5%);
-    .gradient(#3e83eb, #3375d7);
+  display: block;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  padding: 7px;
+  border: 1px solid darken(#3e83eb, 5%);
+  .gradient(#3e83eb, #3375d7);
 }
