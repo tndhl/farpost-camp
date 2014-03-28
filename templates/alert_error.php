@@ -3,5 +3,5 @@
 
     <h2>Что-то пошло не так</h2>
 
-    <p><?php echo $params["text"]; ?></p>
+    <p><?= $text; ?></p>
 </div>

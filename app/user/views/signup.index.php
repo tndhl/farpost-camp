@@ -1,4 +1,4 @@
-<?php if (!empty($params["alert"])) echo $params["alert"]; ?>
+<?php if (!empty($alert)) echo $alert; ?>
 
 <div class="container">
     <h1>Регистрация пользователя</h1>

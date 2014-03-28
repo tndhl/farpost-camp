@@ -1,5 +1,5 @@
 <div class="container user-profile">
-    <h1><?= $params["title"]; ?></h1>
+    <h1><?= $title; ?></h1>
 
     <div class="row">
         <div class="col col-3">
@@ -7,7 +7,7 @@
 
             <strong>Роли</strong>
             <ul>
-                <?php foreach ($params["user"]->getRoles() as $role): ?>
+                <?php foreach ($user->getRoles() as $role): ?>
                     <li><?= $role["name"]; ?></li>
                 <?php endforeach; ?>
             </ul>
@@ -19,17 +19,17 @@
                     <div class="group">
                         <label for="inputLastname">Фамилия</label>
                     <span class="editable" data-type="text"
-                          data-name="lastname"><?= $params["user"]->lastname; ?></span>
+                          data-name="lastname"><?= $user->lastname; ?></span>
                     </div>
 
                     <div class="group">
                         <label for="inputFirstname">Имя</label>
                     <span class="editable" data-type="text"
-                          data-name="lastname"><?= $params["user"]->firstname; ?></span>
+                          data-name="lastname"><?= $user->firstname; ?></span>
                     </div>
                 </div>
 
-                <?php foreach ($params["user"]->xfields as $xfield): ?>
+                <?php foreach ($user->xfields as $xfield): ?>
                     <div class="group">
                         <label for="input<?= $xfield["alt"]; ?>"><?= $xfield["title"]; ?></label>
                     <span class="editable" data-fid="<?= $xfield["id"]; ?>">

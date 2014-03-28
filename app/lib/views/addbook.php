@@ -6,8 +6,8 @@
             <div class="group">
                 <label for="selectCategory">Категория *</label>
                 <select class="required" id="selectCategory" name="category">
-                    <?php foreach ($params["categories"] as $category): ?>
-                        <option value="<?php echo $category["id"]; ?>"><?php echo $category["title"]; ?></option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $category["id"]; ?>"><?= $category["title"]; ?></option>
                     <?php endforeach; ?>
                 </select>
                 <span class="error"></span>

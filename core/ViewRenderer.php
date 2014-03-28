@@ -19,8 +19,11 @@ class ViewRenderer extends Renderer
      */
     public function render($view, $out = false)
     {
-        $params = self::$params;
-        $globals = LayoutRenderer::getParams();
+        if (!empty(self::$params)) {
+            foreach (self::$params as $key => $value) {
+                $$key = $value;
+            }
+        }
 
         ob_start();
         require_once $this->componentViewDirectory . '/' . $view . '.php';
