@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <title>FarPost Portal</title>
 
-    <link rel="stylesheet" href="/public/assets/stylesheets/normalize.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
     <link rel="stylesheet/less" href="/public/assets/stylesheets/template.less?<?php print time(); ?>">
 
-    <script src="/public/assets/javascripts/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="header">
@@ -40,6 +40,6 @@
 <div class="footer">
 </div>
 
-<script src="/public/assets/javascripts/less.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.0/less.min.js"></script>
 </body>
 </html>
