@@ -95,4 +95,20 @@ class LibraryProvider extends Provider
 
         return false;
     }
+
+    public function removeBookById($id)
+    {
+        $sth = $this->prepare(
+            "DELETE lib_book, lib_queue
+            FROM lib_book
+            LEFT JOIN lib_queue ON lib_book.id = lib_queue.book_id
+            WHERE lib_book.id = ?"
+        );
+
+        if ($sth->execute(array($id))) {
+            return true;
+        }
+
+        return false;
+    }
 }

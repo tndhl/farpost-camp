@@ -32,8 +32,10 @@ class Controller extends Services
      */
     public function book($id)
     {
+        $User = new User();
         return $this->ViewRenderer
             ->bindParam('book', $this->lib->findBookById($id))
+            ->bindParam('user', $User->getCurrentUser())
             ->render('book');
     }
 
@@ -44,7 +46,7 @@ class Controller extends Services
     public function category($id)
     {
         $User = new User();
-        
+
         return $this->ViewRenderer
             ->bindParam('user', $User->getCurrentUser())
             ->bindParam('category', $this->lib->findCategoryById($id))
@@ -172,7 +174,7 @@ class Controller extends Services
             $this->displayAlertError('Возникла ошибка. Возможно, проблемы с БД.');
         }
 
-        $this->LayoutRenderer->render();
+        return;
     }
 
     public function remove_queue($book_id, $user_id)
@@ -185,13 +187,14 @@ class Controller extends Services
             $this->displayAlertError('Возникла ошибка. Возможно, проблемы с БД.');
         }
 
-        $this->LayoutRenderer->render();
+        return;
     }
 
     /**
      * Удаление категории с всех книг в ней.
      * С подтверждением от пользователя.
      * @param $id
+     * @return string
      */
     public function remove_category($id)
     {
@@ -220,6 +223,44 @@ class Controller extends Services
                 $content = $this->ViewRenderer
                     ->bindParam('category', $category)
                     ->render('category_remove');
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Удаление книги с подтверждением
+     * @param $id
+     * @return string
+     */
+    public function remove_book($id)
+    {
+        $user = new User();
+        $user = $user->getCurrentUser();
+
+        if (!$user->hasRole('Администратор')) {
+            $this->setAlert('error', 'У Вас нет привилегий на это.');
+            return $this->book($id);
+        }
+
+        $book = $this->lib->findBookById($id);
+
+        if (!isset($_REQUEST["confirm"])) {
+            $content = $this->ViewRenderer
+                ->bindParam('book', $book)
+                ->render('book_remove');
+        } else {
+            if ($this->lib->removeBookById($id)) {
+                $content = $this->ViewRenderer
+                    ->bindParam('book', $book)
+                    ->render('book_removed');
+            } else {
+                $this->setAlert('error', 'Невозможно удалить книгу.');
+
+                $content = $this->ViewRenderer
+                    ->bindParam('book', $book)
+                    ->render('book_remove');
             }
         }
 

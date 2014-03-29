@@ -1,3 +1,12 @@
+<?php if ($user->hasRole('Администратор')): ?>
+    <div class="admin-menu">
+        <span>Управление книгой</span>
+        <ul>
+            <li><a href="/lib/remove_book/<?= $book->id; ?>">Удалить книгу</a></li>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <div class="container library-book">
     <a class="btn-back" href="/lib/category/<?= $book->category; ?>">Вернуться назад</a>
 

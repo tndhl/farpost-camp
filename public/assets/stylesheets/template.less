@@ -246,8 +246,11 @@ div.admin-menu {
   margin-bottom: 10px;
 
   background-color: #ffffff;
-  padding: 10px;
   border: 1px solid #d9d9d9;
+
+  span {
+    padding: 10px;
+  }
 
   &:hover {
     color: #ffffff;
@@ -255,21 +258,28 @@ div.admin-menu {
   }
 
   &:hover > ul {
-    display: block;
+    display: inline-block;
   }
 
   ul {
     z-index: 9999;
-    position: absolute;
-    bottom: -41px;
-    right: -1px;
+    position: relative;
+    top: 0;
+    right: 0;
     display: none;
     list-style: none;
-
     background-color: #ffffff;
     padding: 10px;
-    border: 1px solid #d9d9d9;
-    border-top: none;
+
+    li {
+      display: inline-block;
+      padding: 0 15px 0 18px;
+      border-left: 1px solid #d5d5d5;
+
+      &:first-child {
+        border: none;
+      }
+    }
   }
 }
 

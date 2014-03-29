@@ -1,8 +1,8 @@
 <?php if ($user->hasRole('Администратор')): ?>
     <div class="admin-menu">
-        <span>Управление категорией</span>
+        <span>Управление разделом</span>
         <ul>
-            <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить категорию</a></li>
+            <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить раздел</a></li>
         </ul>
     </div>
 <?php endif; ?>
