@@ -184,4 +184,42 @@ class Controller extends Services
 
         $this->LayoutRenderer->render();
     }
+
+    /**
+     * Удаление категории с всех книг в ней.
+     * С подтверждением от пользователя.
+     * @param $id
+     */
+    public function remove_category($id)
+    {
+        $user = new User();
+        $user = $user->getCurrentUser();
+
+        if (!$user->hasRole('Администратор')) {
+            $this->setAlert('error', 'У Вас нет привилегий на это.');
+            return $this->category($id);
+        }
+
+        $category = $this->lib->findCategoryById($id);
+
+        if (!isset($_REQUEST["confirm"])) {
+            $content = $this->ViewRenderer
+                ->bindParam('category', $category)
+                ->render('category_remove');
+        } else {
+            if ($this->lib->removeCategoryById($id)) {
+                $content = $this->ViewRenderer
+                    ->bindParam('category', $category)
+                    ->render('category_removed');
+            } else {
+                $this->setAlert('error', 'Невозможно удалить категорию.');
+
+                $content = $this->ViewRenderer
+                    ->bindParam('category', $category)
+                    ->render('category_remove');
+            }
+        }
+
+        return $content;
+    }
 }

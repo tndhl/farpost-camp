@@ -79,4 +79,20 @@ class LibraryProvider extends Provider
 
         return $sth->fetch();
     }
+
+    public function removeCategoryById($id)
+    {
+        $sth = $this->prepare(
+            "DELETE lib_book, lib_category
+            FROM lib_category
+            LEFT JOIN lib_book ON lib_book.category = lib_category.id
+            WHERE lib_category.id = ?"
+        );
+
+        if ($sth->execute(array($id))) {
+            return true;
+        }
+
+        return false;
+    }
 }

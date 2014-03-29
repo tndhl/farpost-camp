@@ -25,7 +25,7 @@ class User extends Provider
 
             return $userEntity;
         } else {
-            new UserEntity();
+            return new UserEntity();
         }
     }
 
