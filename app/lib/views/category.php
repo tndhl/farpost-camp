@@ -1,9 +1,11 @@
-<div class="admin-menu">
-    <span>Управление категорией</span>
-    <ul>
-        <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить категорию</a></li>
-    </ul>
-</div>
+<?php if ($user->hasRole('Администратор')): ?>
+    <div class="admin-menu">
+        <span>Управление категорией</span>
+        <ul>
+            <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить категорию</a></li>
+        </ul>
+    </div>
+<?php endif; ?>
 
 <div class="container library">
     <h2><?= $category["title"]; ?></h2>

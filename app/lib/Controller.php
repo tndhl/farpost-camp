@@ -43,7 +43,10 @@ class Controller extends Services
      */
     public function category($id)
     {
+        $User = new User();
+        
         return $this->ViewRenderer
+            ->bindParam('user', $User->getCurrentUser())
             ->bindParam('category', $this->lib->findCategoryById($id))
             ->bindParam('books', $this->lib->findBooksByCategoryId($id))
             ->render('category');
