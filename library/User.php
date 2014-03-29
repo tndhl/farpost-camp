@@ -1,7 +1,9 @@
 <?php
 namespace Library;
 
+use App\User\UserProvider;
 use Core\Database\Provider;
+use Utils\User\UserEntity;
 
 class User extends Provider
 {
@@ -10,6 +12,21 @@ class User extends Provider
     public function setParams($params)
     {
         $this->params = $params;
+    }
+
+    /**
+     * @return UserEntity
+     */
+    public function getCurrentUser()
+    {
+        if ($this->isUserLoggedIn()) {
+            $userProvider = new UserProvider();
+            $userEntity = $userProvider->findUserByLogin($this->getSignedUser()["login"]);
+
+            return $userEntity;
+        } else {
+            new UserEntity();
+        }
     }
 
     public function isUserLoggedIn()

@@ -21,19 +21,27 @@ class Dispatcher
         $this->parseRequest($component, $method, $args);
 
         try {
-            $component = "\App\\$component\\Controller";
+            $component = "\\App\\$component\\Controller";
 
             if (!class_exists($component)) {
                 throw new \Exception("Cannot load component");
             }
 
+            /** @var $component Services */
             $component = new $component();
 
             if (!is_callable(array($component, $method))) {
                 throw new \Exception("Component controller has no requested method.");
             }
 
-            call_user_func_array(array($component, $method), $args);
+            $content = call_user_func_array(array($component, $method), $args);
+            $alert = $component->getAlert();
+
+            $ContentRenderer = new ContentRenderer();
+            $ContentRenderer->setContent($content);
+            $ContentRenderer->setAlert($alert);
+
+            $ContentRenderer->render();
         } catch (\Exception $e) {
             print $e->getMessage();
             exit;
