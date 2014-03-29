@@ -111,4 +111,24 @@ class LibraryProvider extends Provider
 
         return false;
     }
+
+    /**
+     * @param $id int ID раздела
+     * @param $params array Данные формы
+     * @return bool
+     */
+    public function updateCategoryById($id, $params)
+    {
+        $sth = $this->prepare(
+            "UPDATE lib_category
+            SET title = ?
+            WHERE id = ?"
+        );
+
+        if ($sth->execute(array($params["title"], $id))) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -3,6 +3,7 @@
         <span>Управление разделом</span>
         <ul>
             <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить раздел</a></li>
+            <li><a href="/lib/edit_category/<?= $category["id"]; ?>">Редактировать раздел</a></li>
         </ul>
     </div>
 <?php endif; ?>

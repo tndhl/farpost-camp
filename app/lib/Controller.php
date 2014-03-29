@@ -141,7 +141,7 @@ class Controller extends Services
         $result = array();
 
         // Если установлен флаг "Электронная книга", то должен быть выбран файл этой книги
-        if ($extra["ebook"]) {
+        if (!empty($extra["ebook"])) {
             if (strlen($params["book"]) == 0) {
                 $result[] = "book";
             }
@@ -265,5 +265,30 @@ class Controller extends Services
         }
 
         return $content;
+    }
+
+    /**
+     * Форма изменения раздела
+     * @param $id
+     */
+    public function edit_category($id)
+    {
+        if (!empty($_POST)) {
+            if (count($this->validate($_POST)) == 0) {
+                if ($this->lib->updateCategoryById($id, $_POST)) {
+                    $this->setAlert('success', 'Информация о разделе успешно обновлена.');
+
+                    return $this->category($id);
+                } else {
+                    $this->setAlert('error', 'Возникли проблемы при обновлении раздела.');
+                }
+            } else {
+                $this->setAlert('error', 'Неверно заполнены поля формы.');
+            }
+        }
+
+        return $this->ViewRenderer
+            ->bindParam('category', $this->lib->findCategoryById($id))
+            ->render('category_edit');
     }
 }
