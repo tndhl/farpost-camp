@@ -12,10 +12,6 @@ class Controller extends Services
 
     public function index()
     {
-        $content = $this->ViewRenderer->render('index');
-
-        $this->LayoutRenderer
-            ->bindParam('content', $content)
-            ->render();
+        return $this->ViewRenderer->render('index');
     }
 }

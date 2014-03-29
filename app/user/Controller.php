@@ -140,14 +140,12 @@ class Controller extends Services
             }
         }
 
-        $this->LayoutRenderer
-            ->bindParam('content', $content)
-            ->render();
+        return $content;
     }
 
     /**
      * Активация аккаунта
-     * @return void
+     * @return string
      */
     public function activate()
     {
@@ -167,9 +165,7 @@ class Controller extends Services
             $content = $this->ViewRenderer->render('activate.error');
         }
 
-        $this->LayoutRenderer
-            ->bindParam('content', $content)
-            ->render();
+        return $content;
     }
 
     public function signin()
@@ -192,9 +188,7 @@ class Controller extends Services
             }
         }
 
-        $this->LayoutRenderer
-            ->bindParam('content', $content)
-            ->render();
+        return $content;
     }
 
     public function profile($login = '')
@@ -211,13 +205,9 @@ class Controller extends Services
             $pageTitle = "Профиль пользователя " . $user->login;
         }
 
-        $content = $this->ViewRenderer
+        return $this->ViewRenderer
             ->bindParam('user', $user)
             ->bindParam('title', $pageTitle)
             ->render('profile');
-
-        $this->LayoutRenderer
-            ->bindParam('content', $content)
-            ->render();
     }
 }

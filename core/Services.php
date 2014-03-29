@@ -1,61 +1,63 @@
 <?php
 namespace Core;
 
-use App\User\UserProvider;
 use Library\User;
-use Utils\User\UserEntity;
 
 abstract class Services
 {
+    /**
+     * @var string Alert HTML
+     */
+    private $alert;
+
     protected $services = array();
 
     public function __construct()
     {
-        $this->LayoutRenderer = new LayoutRenderer();
         $this->ViewRenderer = new ViewRenderer(get_class($this));
 
-        $user = new User;
-
-        if ($user->isUserLoggedIn()) {
-            $userProvider = new UserProvider();
-            $userEntity = $userProvider->findUserByLogin($user->getSignedUser()["login"]);
-
-            $this->LayoutRenderer
-                ->bindParam("user", $userEntity)
-                ->bindParam("userlinks", $this->LayoutRenderer->render('user_logged', false));
-        } else {
-            $this->LayoutRenderer
-                ->bindParam('userlinks', $this->LayoutRenderer->render('user_links', false))
-                ->bindParam('user', new UserEntity());
-        }
-
         if (isset($_GET["logout"])) {
+            $user = new User;
             $user->userLogout();
+
             $this->redirect("/");
         }
     }
 
     /**
-     * Вывод ошибки пользователю
-     * @param  string $message ошибка
-     * @return  void
+     * Установка сообщения для пользователя
+     * @param string $type success|error
+     * @param string $message Сообщение
+     * @return void
+     */
+    public function setAlert($type, $message)
+    {
+        $LayoutRenderer = new LayoutRenderer();
+
+        $this->alert = $LayoutRenderer
+            ->bindParam('text', $message)
+            ->render('alert_' . $type, false);
+    }
+
+    public function getAlert()
+    {
+        return $this->alert;
+    }
+
+    /**
+     * @deprecated
      */
     public function displayAlertError($message)
     {
-        $this->LayoutRenderer
-            ->bindParam('error',
-                $this->LayoutRenderer
-                    ->bindParam('text', $message)
-                    ->render('alert_error', false));
+        $this->setAlert('error', $message);
     }
 
+    /**
+     * @deprecated
+     */
     public function displayAlertSuccess($message)
     {
-        $this->LayoutRenderer
-            ->bindParam('error',
-                $this->LayoutRenderer
-                    ->bindParam('text', $message)
-                    ->render('alert_success', false));
+        $this->setAlert('success', $message);
     }
 
     public function redirect($url)

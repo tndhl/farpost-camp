@@ -32,7 +32,7 @@
 </div>
 
 <div class="layout" role="main">
-    {error}
+    {alert}
 
     {content}
 </div>

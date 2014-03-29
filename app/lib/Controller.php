@@ -2,6 +2,7 @@
 namespace App\Lib;
 
 use Core\Services;
+use Library\User;
 use Utils\Library\QueueModel;
 
 class Controller extends Services
@@ -17,11 +18,12 @@ class Controller extends Services
      */
     public function index()
     {
-        $content = $this->ViewRenderer
-            ->bindParam('categories', $this->lib->getCategoryList())
-            ->render('index');
+        $User = new User();
 
-        $this->LayoutRenderer->bindParam('content', $content)->render();
+        return $this->ViewRenderer
+            ->bindParam('categories', $this->lib->getCategoryList())
+            ->bindParam('user', $User->getCurrentUser())
+            ->render('index');
     }
 
     /**
@@ -30,11 +32,9 @@ class Controller extends Services
      */
     public function book($id)
     {
-        $content = $this->ViewRenderer
+        return $this->ViewRenderer
             ->bindParam('book', $this->lib->findBookById($id))
             ->render('book');
-
-        $this->LayoutRenderer->bindParam('content', $content)->render();
     }
 
     /**
@@ -43,12 +43,10 @@ class Controller extends Services
      */
     public function category($id)
     {
-        $content = $this->ViewRenderer
+        return $this->ViewRenderer
             ->bindParam('category', $this->lib->findCategoryById($id))
             ->bindParam('books', $this->lib->findBooksByCategoryId($id))
             ->render('category');
-
-        $this->LayoutRenderer->bindParam('content', $content)->render();
     }
 
     /**
@@ -56,8 +54,6 @@ class Controller extends Services
      */
     public function addbook()
     {
-        $content = $this->ViewRenderer->bindParam('categories', $this->lib->getCategoryList())->render('addbook');
-
         if (!empty($_POST)) {
             $_POST["ebook"] = !empty($_POST["ebook"]) ? 1 : 0;
 
@@ -94,7 +90,9 @@ class Controller extends Services
             }
         }
 
-        $this->LayoutRenderer->bindParam('content', $content)->render();
+        return $this->ViewRenderer
+            ->bindParam('categories', $this->lib->getCategoryList())
+            ->render('addbook');
     }
 
     /**
@@ -102,15 +100,13 @@ class Controller extends Services
      */
     public function addcategory()
     {
-        $content = $this->ViewRenderer->render('addcategory');
-
         if (!empty($_POST)) {
             if (count($this->validate($_POST)) > 0) {
                 $this->displayAlertError("Пожалуйста, заполните все необходимые поля.");
             }
         }
 
-        $this->LayoutRenderer->bindParam('content', $content)->render();
+        return $this->ViewRenderer->render('addcategory');
     }
 
     /**

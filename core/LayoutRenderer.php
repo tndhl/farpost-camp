@@ -10,9 +10,6 @@ class LayoutRenderer extends Renderer
      */
     public function render($template = 'default', $out = true)
     {
-        $error = "";
-        $content = "";
-
         if (!empty(self::$params)) {
             foreach (self::$params as $key => $value) {
                 $$key = $value;
@@ -22,7 +19,7 @@ class LayoutRenderer extends Renderer
         ob_start();
         require_once APP_PATH . '/templates/' . $template . '.php';
         $template = ob_get_contents();
-        $template = str_replace("{error}", $error, $template);
+        $template = str_replace("{alert}", $alert, $template);
         $template = str_replace("{content}", $content, $template);
         ob_end_clean();
 
