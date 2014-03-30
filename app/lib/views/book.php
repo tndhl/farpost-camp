@@ -1,9 +1,12 @@
 <?php if ($user->hasRole('Администратор')): ?>
     <div class="admin-menu">
-        <span>Управление книгой</span>
-        <ul>
-            <li><a href="/lib/remove_book/<?= $book->id; ?>">Удалить книгу</a></li>
-        </ul>
+        <span>Управление</span>
+
+        <div class="actions">
+            <ul>
+                <li><a href="/lib/remove_book/<?= $book->id; ?>">Удалить книгу</a></li>
+            </ul>
+        </div>
     </div>
 <?php endif; ?>
 

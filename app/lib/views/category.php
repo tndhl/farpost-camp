@@ -1,10 +1,13 @@
 <?php if ($user->hasRole('Администратор')): ?>
     <div class="admin-menu">
-        <span>Управление разделом</span>
-        <ul>
-            <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить раздел</a></li>
-            <li><a href="/lib/edit_category/<?= $category["id"]; ?>">Редактировать раздел</a></li>
-        </ul>
+        <span>Управление</span>
+
+        <div class="actions">
+            <ul>
+                <li><a href="/lib/remove_category/<?= $category["id"]; ?>">Удалить раздел</a></li>
+                <li><a href="/lib/edit_category/<?= $category["id"]; ?>">Редактировать раздел</a></li>
+            </ul>
+        </div>
     </div>
 <?php endif; ?>
 
