@@ -291,4 +291,31 @@ class Controller extends Services
             ->bindParam('category', $this->lib->findCategoryById($id))
             ->render('category_edit');
     }
+
+    /**
+     * Форма изменения книги
+     * @param $id
+     * @return string
+     */
+    public function edit_book($id)
+    {
+        if (!empty($_POST)) {
+            if (count($this->validate($_POST)) == 0) {
+                if ($this->lib->updateBookById($id, $_POST)) {
+                    $this->setAlert('success', 'Книга успешно обновлена!');
+
+                    return $this->book($id);
+                } else {
+                    $this->setAlert('error', "Видимо, какие-то проблемы с базой данных.");
+                }
+            } else {
+                $this->setAlert('error', 'Неверно заполнены поля формы.');
+            }
+        }
+
+        return $this->ViewRenderer
+            ->bindParam('categories', $this->lib->getCategoryList())
+            ->bindParam('book', $this->lib->findBookById($id))
+            ->render('book_edit');
+    }
 }

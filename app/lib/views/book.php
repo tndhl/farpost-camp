@@ -5,6 +5,7 @@
         <div class="actions">
             <ul>
                 <li><a href="/lib/remove_book/<?= $book->id; ?>">Удалить книгу</a></li>
+                <li><a href="/lib/edit_book/<?= $book->id; ?>">Редактировать книгу</a></li>
             </ul>
         </div>
     </div>

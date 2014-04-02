@@ -131,4 +131,33 @@ class LibraryProvider extends Provider
 
         return false;
     }
+
+    /**
+     * @param $id int ID книги
+     * @param $params array Данные формы
+     * @return bool
+     */
+    public function updateBookById($id, $params)
+    {
+        $sth = $this->prepare(
+            "UPDATE lib_book
+             SET category = ?, title = ?, author = ?, annotation = ?, publisher = ?
+             WHERE id = ?"
+        );
+
+        if ($sth->execute(
+            array(
+                $params["category"],
+                $params["title"],
+                $params["author"],
+                $params["annotation"],
+                $params["publisher"],
+                $id
+            ))
+        ) {
+            return true;
+        }
+
+        return false;
+    }
 }
