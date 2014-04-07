@@ -32,7 +32,7 @@ class BookEntity
     {
         $queue = new QueueModel();
 
-        return $queue->getBookCurrentOwner($this->id);
+        return $queue->getBookOwnerName($this->id);
     }
 
     public function getTakingDate()

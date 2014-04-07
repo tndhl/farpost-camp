@@ -48,12 +48,26 @@ class QueueModel
         return 'На руках';
     }
 
-    public function getBookCurrentOwner($book_id)
+    public function getBookOwnerName($book_id)
     {
         $sth = $this->pdo->prepare(
             "SELECT concat(firstname, ' ', lastname) as owner
             FROM lib_queue
             INNER JOIN user ON user.id = lib_queue.user_id
+            WHERE book_id = ?
+            AND owned = 1"
+        );
+
+        $sth->execute(array($book_id));
+
+        return $sth->fetchColumn();
+    }
+
+    public function getBookOwnerId($book_id)
+    {
+        $sth = $this->pdo->prepare(
+            "SELECT user_id
+            FROM lib_queue
             WHERE book_id = ?
             AND owned = 1"
         );
@@ -91,8 +105,44 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    public function setBookOwner($book_id, $user_id)
+    {
+        $sth = $this->pdo->prepare(
+            "UPDATE lib_queue
+            SET owned = 1
+            WHERE book_id = ?
+            AND user_id = ?"
+        );
+
+        $sth->execute(array($book_id, $user_id));
+    }
+
+    public function getNextBookOwner($book_id)
+    {
+        $sth = $this->pdo->prepare(
+            "SELECT user_id
+            FROM lib_queue
+            WHERE owned = 0
+            AND book_id = ?
+            ORDER BY date
+            LIMIT 1"
+        );
+
+        $sth->execute(array($book_id));
+
+        return $sth->fetchColumn();
+    }
+
     public function removeFromQueue($book_id, $user_id)
     {
+        if ($this->isBookOwned($book_id)) {
+            if ($this->getBookOwnerId($book_id) == $user_id) {
+                if (($owner_id = $this->getNextBookOwner($book_id)) != false) {
+                    $this->setBookOwner($book_id, $owner_id);
+                }
+            }
+        }
+
         $sth = $this->pdo->prepare(
             "DELETE FROM lib_queue
             WHERE book_id = ?
