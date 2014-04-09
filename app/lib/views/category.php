@@ -25,7 +25,7 @@
                     <div class="book">
                         <div class="image">
                             <a href="/lib/book/<?= $books[$i]->id; ?>">
-                                <img src="/public/images/books/<?= $books[$i]->image; ?>">
+                                <img src="/public/books/images/<?= $books[$i]->image; ?>">
                             </a>
                         </div>
                         <div class="description">
@@ -41,7 +41,7 @@
                     <div class="book">
                         <div class="image">
                             <a href="/lib/book/<?= $books[$i]->id; ?>">
-                                <img src="/public/images/books/<?= $books[$i]->image; ?>">
+                                <img src="/public/books/images/<?= $books[$i]->image; ?>">
                             </a>
                         </div>
                         <div class="description">

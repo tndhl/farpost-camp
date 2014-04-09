@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col col-3">
-            <img src="/public/images/books/<?= $book->image; ?>">
+            <img src="/public/books/images/<?= $book->image; ?>">
         </div>
 
         <div class="col col-9">

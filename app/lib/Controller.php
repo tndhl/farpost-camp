@@ -67,7 +67,7 @@ class Controller extends Services
             } else {
                 $imagefile = time() . '_' . $_FILES['image']['name'];
 
-                if (move_uploaded_file($_FILES['image']['tmp_name'], APP_PATH . '/public/images/books/' . $imagefile)) {
+                if (move_uploaded_file($_FILES['image']['tmp_name'], APP_PATH . '/public/books/images/' . $imagefile)) {
                     $_POST["image"] = $imagefile;
 
                     // Загрузка книги, если нужно
