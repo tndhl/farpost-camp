@@ -35,7 +35,7 @@
         </div>
 
         <div class="group">
-            <label for="inputImage">Изображение *</label>
+            <label for="inputImage">Изображение * <small>(.JPEG, .JPG)</small></label>
             <input class="required" id="inputImage" name="image" type="file">
             <span class="error"></span>
         </div>
@@ -53,7 +53,7 @@
         <br/><br/>
 
         <div class="group hidden" id="ebook_loader">
-            <label for="inputBook">Файл книги *</label>
+            <label for="inputBook">Файл книги * <small>(.PDF, .DJVU)</small></label>
             <input class="required" id="inputBook" name="book" type="file">
             <span class="error"></span>
         </div>

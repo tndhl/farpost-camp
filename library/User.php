@@ -58,6 +58,10 @@ class User extends Provider
      */
     public function getSignedUser()
     {
+        if (empty($_COOKIE["hash"])) {
+            return false;
+        }
+
         $hash = $_COOKIE["hash"];
 
         $sth = $this->prepare(

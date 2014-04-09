@@ -4,6 +4,7 @@ namespace App\User;
 use Core\Services;
 use Library\Mailer;
 use Library\User;
+use Utils\User\RoleModel;
 
 class Controller extends Services
 {
@@ -193,11 +194,16 @@ class Controller extends Services
 
     public function profile($login = '')
     {
-        $user = new User();
-        $user = $user->getSignedUser();
+        $User = new User();
+
+        $user = $User->getSignedUser();
         $UserProvider = new UserProvider();
 
         if (empty($login)) {
+            if (!$User->isUserLoggedIn()) {
+                return $this->ViewRenderer->render('nologin');
+            }
+
             $user = $UserProvider->findUserByLogin($user["login"]);
             $pageTitle = "Ваш профиль";
         } else {
@@ -206,8 +212,85 @@ class Controller extends Services
         }
 
         return $this->ViewRenderer
-            ->bindParam('user', $user)
+            ->bindParam('profile', $user)
+            ->bindParam('user', $User->getCurrentUser())
             ->bindParam('title', $pageTitle)
             ->render('profile');
+    }
+
+    /**
+     * @AJAX
+     * Добавление роли пользователю
+     */
+    public function addrole()
+    {
+        $RoleModel = new RoleModel();
+        $CurrentUser = new User();
+
+        /** @var int $userId ИД пользователя, кому присвоить роль */
+        $userId = $_REQUEST["userid"];
+
+        if ($CurrentUser->isUserLoggedIn()) {
+            $CurrentUser = $CurrentUser->getCurrentUser();
+
+            if (!$RoleModel->hasUserRole($CurrentUser->id, 'Администратор')) {
+                exit();
+            }
+        } else {
+            exit();
+        }
+
+
+        if (empty($_POST)) {
+            $form = $this->ViewRenderer
+                ->bindParam('roles', $RoleModel->getRoles($RoleModel->getUserRoles($userId)))
+                ->render('ajax.addrole');
+
+            print json_encode(array(
+                "form" => $form
+            ));
+
+            exit();
+        } else {
+            /** @var int $roleid ИД роли, которую нужно добавить */
+            $roleId = $_POST["roleid"];
+
+            if ($RoleModel->addUserRole($userId, $roleId)) {
+                print "OK";
+            }
+
+            exit();
+        }
+    }
+
+    /**
+     * @AJAX
+     * Удаление роли у пользователя
+     */
+    public function removerole()
+    {
+        $RoleModel = new RoleModel();
+        $CurrentUser = new User();
+
+        if ($CurrentUser->isUserLoggedIn()) {
+            $CurrentUser = $CurrentUser->getCurrentUser();
+
+            if (!$RoleModel->hasUserRole($CurrentUser->id, 'Администратор')) {
+                exit();
+            }
+        } else {
+            exit();
+        }
+
+        if (!empty($_POST)) {
+            $userId = $_POST["userid"];
+            $roleId = $_POST["roleid"];
+
+            if ($RoleModel->removeUserRole($userId, $roleId)) {
+                print "OK";
+            }
+        }
+
+        exit();
     }
 }

@@ -28,6 +28,13 @@ class UserEntity
         return $RoleModel->hasUserRole($this->id, $role);
     }
 
+    public function isSuperUser()
+    {
+        $RoleModel = new RoleModel();
+
+        return $RoleModel->isUserSU($this->id);
+    }
+
     /**
      * @return array
      */

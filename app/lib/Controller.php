@@ -61,9 +61,11 @@ class Controller extends Services
     {
         if (!empty($_POST)) {
             $_POST["ebook"] = !empty($_POST["ebook"]) ? 1 : 0;
+            $_POST["book"] = $_POST["ebook"] ? $_FILES["book"]["name"] : "";
+            $_POST["image"] = $_FILES['image']['name'];
 
             if (count($this->validate($_POST)) > 0) {
-                $this->displayAlertError("Пожалуйста, заполните все необходимые поля.");
+                $this->setAlert('error', "Пожалуйста, заполните все необходимые поля.");
             } else {
                 $imagefile = time() . '_' . $_FILES['image']['name'];
 
@@ -72,25 +74,26 @@ class Controller extends Services
 
                     // Загрузка книги, если нужно
                     if ($_POST["ebook"]) {
-                        $bookext = end(explode('.', $_FILES["book"]["name"]));
+                        $book_parts = explode('.', $_FILES["book"]["name"]);
+                        $bookext = array_pop($book_parts);
                         $bookfile = time() . '_' . mt_rand(0, 50) . '.' . $bookext;
 
                         if (move_uploaded_file($_FILES["book"]["tmp_name"], APP_PATH . '/public/books/' . $bookfile)) {
                             $_POST["book"] = $bookfile;
                         } else {
-                            $this->displayAlertError('При загрузке файла книги произошла ошибка.');
+                            $this->setAlert('error', 'При загрузке файла книги произошла ошибка.');
                         }
                     } else {
                         $_POST["book"] = "";
                     }
 
                     if (($id = $this->lib->addBook($_POST)) !== false) {
-                        $this->displayAlertSuccess('Книга успешно добавлена!');
+                        $this->setAlert('success', 'Книга успешно добавлена!');
                     } else {
-                        $this->displayAlertError("Видимо, какие-то проблемы с базой данных.");
+                        $this->setAlert('error', "Видимо, какие-то проблемы с базой данных.");
                     }
                 } else {
-                    $this->displayAlertError('Возникла ошибка при загрузке картинки. ' . $_FILES['image']['error']);
+                    $this->setAlert('error', 'Возникла ошибка при загрузке картинки. ');
                 }
             }
         }
@@ -131,6 +134,9 @@ class Controller extends Services
             "publisher"
         );
 
+        $image_extensions = array('jpg', 'jpeg');
+        $book_extensions = array('pdf', 'djvu');
+
         $params = !empty($_POST["params"]) ? json_decode($_POST["params"], true) : $params;
         $extra = !empty($_POST["extra"]) ? json_decode($_POST["extra"], true) : $params;
 
@@ -142,9 +148,21 @@ class Controller extends Services
 
         // Если установлен флаг "Электронная книга", то должен быть выбран файл этой книги
         if (!empty($extra["ebook"])) {
+            $ext = explode(".", $params["book"]);
+            $ext = strtolower(array_pop($ext));
+
             if (strlen($params["book"]) == 0) {
                 $result[] = "book";
+            } elseif (!in_array($ext, $book_extensions)) {
+                $result[] = "book";
             }
+        }
+
+        $image_ext = explode(".", $params["image"]);
+        $image_ext = strtolower(array_pop($image_ext));
+
+        if (!in_array($image_ext, $image_extensions)) {
+            $result[] = "image";
         }
 
         // Простая проверка на длинну > 0
