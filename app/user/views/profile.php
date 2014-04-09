@@ -18,8 +18,7 @@
 
                         <?php if ($user->hasRole('Администратор') && !$profile->isSuperUser()): ?>
                             <i title="Удалить роль"
-                               class="fa fa-minus"
-                               id="user-remove-role"
+                               class="fa fa-minus user-remove-role"
                                data-uid="<?= $profile->id; ?>"
                                data-rid="<?= $role["id"]; ?>"></i>
                         <?php endif; ?>

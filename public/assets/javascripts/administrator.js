@@ -53,7 +53,7 @@ $(document).ready(function () {
         }
     });
 
-    $('#user-remove-role').click(function () {
+    $('.user-remove-role').click(function () {
         var uid = $(this).data('uid');
         var rid = $(this).data('rid');
 
