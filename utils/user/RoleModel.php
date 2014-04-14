@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexander
- * Date: 3/18/14
- * Time: 6:46 AM
- */
-
 namespace Utils\User;
 
 use Core\Database\Provider;
 
 class RoleModel
 {
-    private $pdo = null;
+    private $pdo = NULL;
 
     public function __construct()
     {
@@ -21,6 +14,9 @@ class RoleModel
 
     /**
      * Список доступных ролей
+     *
+     * @param array $except Список ролей, которые будут исключены
+     *
      * @return array
      */
     public function getRoles($except = array())
@@ -52,8 +48,11 @@ class RoleModel
     }
 
     /**
-     * @param int $uid
-     * @param string $role
+     * Проверка, есть ли роль у пользователя
+     *
+     * @param int    $uid  ИД пользователя
+     * @param string $role Имя роли
+     *
      * @return bool
      */
     public function hasUserRole($uid, $role)
@@ -68,14 +67,17 @@ class RoleModel
         $sth->execute(array($uid, $role));
 
         if ($sth->rowCount() == 1) {
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
     /**
-     * @param $uid
+     * Список ролей у пользователя
+     *
+     * @param int $uid ИД пользователя
+     *
      * @return array
      */
     public function getUserRoles($uid)
@@ -93,8 +95,10 @@ class RoleModel
     }
 
     /**
-     * @param $userid
-     * @param $roleid
+     * Добавить роль для пользователя
+     *
+     * @param int $userid ИД пользователя
+     * @param int $roleid ИД роли
      */
     public function addUserRole($userid, $roleid)
     {
@@ -104,20 +108,22 @@ class RoleModel
         );
 
         if ($sth->execute(array($userid, $roleid))) {
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
     /**
-     * @param $userid
-     * @param $roleid
+     * Удалить роль у пользователя
+     *
+     * @param int $userid ИД пользователя
+     * @param int $roleid ИД роли
      */
     public function removeUserRole($userid, $roleid)
     {
         if ($this->isUserSU($userid)) {
-            return false;
+            return FALSE;
         }
 
         $sth = $this->pdo->prepare(
@@ -128,15 +134,17 @@ class RoleModel
         );
 
         if ($sth->execute(array($userid, $roleid))) {
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
     /**
      * Проверка, является ли пользователь супер-пользователем
-     * @param $userid
+     *
+     * @param int $userid ИД пользователя
+     *
      * @return bool
      */
     public function isUserSU($userid)
@@ -151,6 +159,6 @@ class RoleModel
         $sth->execute(array($userid));
         $user = $sth->fetch();
 
-        return $user["su"] == 1 ? true : false;
+        return $user["su"] == 1 ? TRUE : FALSE;
     }
 }

@@ -1,11 +1,8 @@
 <?php
 namespace Utils\User;
+
 use Core\Database\Provider;
 
-/**
- * Предоставление удобного доступа к пользовательским данным.
- * + Полезные функции
- */
 class UserEntity
 {
     public $id;
@@ -18,7 +15,10 @@ class UserEntity
     public $xfields;
 
     /**
-     * @param string $role
+     * Проверка, есть ли роль у пользователя
+     *
+     * @param string $role Имя роли
+     *
      * @return bool
      */
     public function hasRole($role)
@@ -28,6 +28,11 @@ class UserEntity
         return $RoleModel->hasUserRole($this->id, $role);
     }
 
+    /**
+     * Проверка, является ли пользователь супер-пользователем
+     *
+     * @return bool
+     */
     public function isSuperUser()
     {
         $RoleModel = new RoleModel();
@@ -36,6 +41,8 @@ class UserEntity
     }
 
     /**
+     * Список ролей у пользователя
+     *
      * @return array
      */
     public function getRoles()
@@ -45,6 +52,13 @@ class UserEntity
         return $RoleModel->getUserRoles($this->id);
     }
 
+    /**
+     * Проверка, состоит ли пользователь в очереди на книгу
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return bool
+     */
     public function isInBookQueue($book_id)
     {
         $pdo = new Provider();
@@ -58,9 +72,9 @@ class UserEntity
         $sth->execute(array($this->id, $book_id));
 
         if ($sth->rowCount() == 0) {
-            return false;
+            return FALSE;
         }
 
-        return true;
+        return TRUE;
     }
 }

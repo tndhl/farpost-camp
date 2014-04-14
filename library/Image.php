@@ -1,19 +1,31 @@
 <?php
 namespace Library;
 
-class Image {
+class Image
+{
     private $imageType;
-    private $imageResource = null;
+    private $imageResource = NULL;
 
-    function __construct($filename) {
+    function __construct($filename)
+    {
         $this->load($filename);
     }
 
+    /**
+     * Возвращает ресурс текущего изобращения
+     *
+     * @return resource|NULL
+     */
     public function getResource()
     {
         return $this->imageResource;
     }
 
+    /**
+     * Загрузка изобращения
+     *
+     * @param string $filename Путь к изобращению
+     */
     public function load($filename)
     {
         $image_info = @getimagesize($filename);
@@ -34,6 +46,11 @@ class Image {
         }
     }
 
+    /**
+     * Вывод изображения в браузер
+     *
+     * @param string $imageType Тип изображения
+     */
     public function printOut($imageType = "jpg")
     {
         switch ($imageType) {
@@ -55,11 +72,15 @@ class Image {
         }
     }
 
+    /**
+     * Сохранить текущие изображение
+     *
+     * @param string $filename Путь сохраняемого файла
+     */
     public function save($filename)
     {
         $parts = explode(".", $filename);
         $imageType = strtolower(end($parts));
-
 
         switch ($imageType) {
             case "jpg":
@@ -77,16 +98,31 @@ class Image {
         }
     }
 
+    /**
+     * Возвращает ширину текущего изображения
+     *
+     * @return int
+     */
     public function getWidth()
     {
         return imagesx($this->imageResource);
     }
 
+    /**
+     * Возвращает высоту текущего изображения
+     *
+     * @return int
+     */
     public function getHeight()
     {
         return imagesy($this->imageResource);
     }
 
+    /**
+     * Пропорциональное изменение размеров текущего изображения
+     *
+     * @param float $scale Масштаб
+     */
     public function scale($scale)
     {
         $width = $this->getWidth() * $scale / 100;
@@ -95,6 +131,11 @@ class Image {
         $this->resize($width, $height);
     }
 
+    /**
+     * Пропорциональное изменение размеров текущего изображения по ширине
+     *
+     * @param int $width Ширина (px)
+     */
     public function scaleToWidth($width)
     {
         $scale = $width / $this->getWidth();
@@ -103,6 +144,11 @@ class Image {
         $this->resize($width, $height);
     }
 
+    /**
+     * Пропорциональное изменение размеров текущего изображения по высоте
+     *
+     * @param int $height Высота (px)
+     */
     public function scaleToHeight($height)
     {
         $scale = $height / $this->getHeight();
@@ -111,6 +157,12 @@ class Image {
         $this->resize($width, $height);
     }
 
+    /**
+     * Изменение размеров текущего изображения
+     *
+     * @param int $width  Ширина (px)
+     * @param int $height Высота (px)
+     */
     public function resize($width, $height)
     {
         $resizedImageResource = imagecreatetruecolor($width, $height);
@@ -129,6 +181,14 @@ class Image {
         $this->imageResource = $resizedImageResource;
     }
 
+    /**
+     * Наложить изображение поверх текущего изображения
+     *
+     * @param Image $image   Изображение
+     * @param int   $marginX Отступ слева
+     * @param int   $marginY Отступ сверху
+     * @param int   $opacity Непрозрачность
+     */
     public function mergeWith(Image $image, $marginX = 0, $marginY = 0, $opacity = 100)
     {
         imagecopymerge(

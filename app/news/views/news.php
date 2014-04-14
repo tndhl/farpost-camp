@@ -53,11 +53,7 @@
                     });
 
                     image.src = '/public/events/' + eventid + '/thumb_' + filename;
-
-
                 });
-
-
             });
         </script>
     <?php endif; ?>

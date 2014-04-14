@@ -63,7 +63,7 @@ class LibraryProvider extends Provider
             return $this->lastInsertId();
         }
 
-        return false;
+        return FALSE;
     }
 
     public function findBookById($id)
@@ -90,10 +90,10 @@ class LibraryProvider extends Provider
         );
 
         if ($sth->execute(array($id))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     public function removeBookById($id)
@@ -106,15 +106,16 @@ class LibraryProvider extends Provider
         );
 
         if ($sth->execute(array($id))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
-     * @param $id int ID раздела
-     * @param $params array Данные формы
+     * @param int   $id     ИД раздела
+     * @param array $params Данные формы
+     *
      * @return bool
      */
     public function updateCategoryById($id, $params)
@@ -126,15 +127,16 @@ class LibraryProvider extends Provider
         );
 
         if ($sth->execute(array($params["title"], $id))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
-     * @param $id int ID книги
-     * @param $params array Данные формы
+     * @param int   $id     ID книги
+     * @param array $params Данные формы
+     *
      * @return bool
      */
     public function updateBookById($id, $params)
@@ -155,9 +157,9 @@ class LibraryProvider extends Provider
                 $id
             ))
         ) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 }

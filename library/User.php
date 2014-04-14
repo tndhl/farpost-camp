@@ -9,19 +9,26 @@ class User extends Provider
 {
     private $params = array();
 
+    /**
+     * Установка необходмых параметров
+     *
+     * @param array $params
+     */
     public function setParams($params)
     {
         $this->params = $params;
     }
 
     /**
+     * Получение данных авторизированного пользователя
+     *
      * @return UserEntity
      */
     public function getCurrentUser()
     {
         if ($this->isUserLoggedIn()) {
             $userProvider = new UserProvider();
-            $userEntity = $userProvider->findUserByLogin($this->getSignedUser()["login"]);
+            $userEntity = $userProvider->findUserByLogin($this->getSignedUserLogin());
 
             return $userEntity;
         } else {
@@ -29,6 +36,11 @@ class User extends Provider
         }
     }
 
+    /**
+     * Проверка, авторизирован ли пользователь
+     *
+     * @return bool
+     */
     public function isUserLoggedIn()
     {
         if (!empty($_COOKIE["hash"])) {
@@ -46,20 +58,22 @@ class User extends Provider
             $sth->execute();
 
             if ($sth->rowCount() == 1) {
-                return true;
+                return TRUE;
             }
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
-     * @return array
+     * Получение логина авторизированного пользователя
+     *
+     * @return bool|string
      */
-    public function getSignedUser()
+    public function getSignedUserLogin()
     {
         if (empty($_COOKIE["hash"])) {
-            return false;
+            return FALSE;
         }
 
         $hash = $_COOKIE["hash"];
@@ -74,9 +88,14 @@ class User extends Provider
         $sth->bindParam(":hash", $hash, \PDO::PARAM_STR);
         $sth->execute();
 
-        return $sth->fetch();
+        return $sth->fetchColumn();
     }
 
+    /**
+     * Авторизация пользователя
+     *
+     * @return bool
+     */
     public function userAuthentication()
     {
         $query = "
@@ -109,13 +128,16 @@ class User extends Provider
 
                 @setcookie("hash", $hash, time() + 3600, "/");
 
-                return true;
+                return TRUE;
             }
         }
 
-        return false;
+        return FALSE;
     }
 
+    /**
+     * Выход из профиля
+     */
     public function userLogout()
     {
         $hash = $_COOKIE["hash"];

@@ -5,13 +5,20 @@ use Core\Database\Provider;
 
 class QueueModel
 {
-    private $pdo = null;
+    private $pdo = NULL;
 
     public function __construct()
     {
         $this->pdo = new Provider();
     }
 
+    /**
+     * Проверка, на руках ли книга
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return bool
+     */
     public function isBookOwned($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -24,30 +31,35 @@ class QueueModel
         $sth->execute(array($book_id));
 
         if ($sth->rowCount() == 0) {
-            return false;
+            return FALSE;
         }
 
-        return true;
+        return TRUE;
     }
 
+    /**
+     * Текущий статус книги
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return string
+     */
     public function getBookStatus($book_id)
     {
-        $sth = $this->pdo->prepare(
-            'SELECT book_id
-            FROM lib_queue
-            WHERE book_id = ?
-            AND owned = 1'
-        );
-
-        $sth->execute(array($book_id));
-
-        if ($sth->rowCount() == 0) {
+        if (!$this->isBookOwned($book_id)) {
             return 'Книга свободна';
         }
 
         return 'На руках';
     }
 
+    /**
+     * Имя текущего владелеца книги
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return string
+     */
     public function getBookOwnerName($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -63,6 +75,13 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    /**
+     * ИД текущего владельца книги
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return string
+     */
     public function getBookOwnerId($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -77,6 +96,13 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    /**
+     * Дата взятия книги
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return string
+     */
     public function getBookTakingDate($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -91,6 +117,13 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    /**
+     * Длина очереди на книгу
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return string
+     */
     public function getBookQueueLength($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -105,6 +138,12 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    /**
+     * Установить нового владельца книги
+     *
+     * @param int $book_id ИД книги
+     * @param int $user_id ИД пользователя
+     */
     public function setBookOwner($book_id, $user_id)
     {
         $sth = $this->pdo->prepare(
@@ -117,6 +156,13 @@ class QueueModel
         $sth->execute(array($book_id, $user_id));
     }
 
+    /**
+     * Получить ИД следующего пользователя в очереди на книгу
+     *
+     * @param int $book_id ИД книги
+     *
+     * @return int
+     */
     public function getNextBookOwner($book_id)
     {
         $sth = $this->pdo->prepare(
@@ -133,11 +179,19 @@ class QueueModel
         return $sth->fetchColumn();
     }
 
+    /**
+     * Удалить пользователя из очереди на книгу
+     *
+     * @param int $book_id ИД книги
+     * @param int $user_id ИД пользователя
+     *
+     * @return bool
+     */
     public function removeFromQueue($book_id, $user_id)
     {
         if ($this->isBookOwned($book_id)) {
             if ($this->getBookOwnerId($book_id) == $user_id) {
-                if (($owner_id = $this->getNextBookOwner($book_id)) != false) {
+                if (($owner_id = $this->getNextBookOwner($book_id)) != FALSE) {
                     $this->setBookOwner($book_id, $owner_id);
                 }
             }
@@ -150,13 +204,22 @@ class QueueModel
         );
 
         if ($sth->execute(array($book_id, $user_id))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
-    public function addToQueue($book_id, $user_id, $is_owner)
+    /**
+     * Добавить пользователя в очередь на книгу
+     *
+     * @param int $book_id  ИД книги
+     * @param int $user_id  ИД пользователя
+     * @param int $is_owner Владелец?
+     *
+     * @return bool
+     */
+    public function addToQueue($book_id, $user_id, $is_owner = 0)
     {
         $sth = $this->pdo->prepare(
             "INSERT INTO lib_queue (book_id, user_id, owned) VALUES (?, ?, ?)
@@ -164,9 +227,9 @@ class QueueModel
         );
 
         if ($sth->execute(array($book_id, $user_id, $is_owner))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 }

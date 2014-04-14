@@ -10,7 +10,8 @@ class Mailer
     private $replyEmail = "noreply@farpostportal";
 
     /**
-     * Set title of sender
+     * Установка имени отправителя
+     *
      * @param string $sender
      */
     public function setSenderTitle($sender)
@@ -19,7 +20,8 @@ class Mailer
     }
 
     /**
-     * Set email to reply
+     * Установка Email для ответа
+     *
      * @param string $email
      */
     public function setReplyEmail($email)
@@ -28,9 +30,9 @@ class Mailer
     }
 
     /**
-     * Set mail receiver
-     * @param $receiver
-     * @internal param string $to
+     * Установка Email получателя
+     *
+     * @param string $receiver E-mail
      */
     public function setReceiver($receiver)
     {
@@ -38,7 +40,8 @@ class Mailer
     }
 
     /**
-     * Set email subject
+     * Установка темы
+     *
      * @param string $subject
      */
     public function setSubject($subject)
@@ -47,7 +50,8 @@ class Mailer
     }
 
     /**
-     * Set email text
+     * Установка тела
+     *
      * @param string $message
      */
     public function setMessage($message)
@@ -56,13 +60,14 @@ class Mailer
     }
 
     /**
-     * Send email to $receiver
+     * Отправка
+     *
      * @return boolean
      */
     public function sendEmail()
     {
         if (empty($this->receiver) || empty($this->subject) || empty($this->message)) {
-            return false;
+            return FALSE;
         }
 
         $headers = "From: =?utf-8?b?" . base64_encode($this->sender) . "?= <" . $this->replyEmail . ">\r\n";
@@ -71,9 +76,9 @@ class Mailer
         $this->subject = "=?utf-8?b?" . base64_encode($this->subject) . "?=";
 
         if (mail($this->receiver, $this->subject, $this->message, $headers)) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 }

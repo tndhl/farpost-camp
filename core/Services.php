@@ -26,8 +26,10 @@ abstract class Services
 
     /**
      * Установка сообщения для пользователя
-     * @param string $type success|error
+     *
+     * @param string $type    success|error
      * @param string $message Сообщение
+     *
      * @return void
      */
     public function setAlert($type, $message)
@@ -36,7 +38,7 @@ abstract class Services
 
         $this->alert = $LayoutRenderer
             ->bindParam('text', $message)
-            ->render('alert_' . $type, false);
+            ->render('alert_' . $type, FALSE);
     }
 
     public function getAlert()
@@ -77,6 +79,6 @@ abstract class Services
             return $this->services[$key];
         }
 
-        return false;
+        return FALSE;
     }
 }

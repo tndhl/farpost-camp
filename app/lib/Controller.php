@@ -28,7 +28,8 @@ class Controller extends Services
 
     /**
      * Отображение детальной информации о книге $id
-     * @param $id
+     *
+     * @param int $id
      */
     public function book($id)
     {
@@ -41,7 +42,8 @@ class Controller extends Services
 
     /**
      * Отображение книг в выбранной категории $id
-     * @param $id
+     *
+     * @param int $id
      */
     public function category($id)
     {
@@ -87,7 +89,7 @@ class Controller extends Services
                         $_POST["book"] = "";
                     }
 
-                    if (($id = $this->lib->addBook($_POST)) !== false) {
+                    if (($id = $this->lib->addBook($_POST)) !== FALSE) {
                         $this->setAlert('success', 'Книга успешно добавлена!');
                     } else {
                         $this->setAlert('error', "Видимо, какие-то проблемы с базой данных.");
@@ -120,7 +122,9 @@ class Controller extends Services
     /**
      * Проверка отправленных данных.
      * В т.ч. через AJAX. (form.validation.js)
+     *
      * @param array $params
+     *
      * @return array|bool
      */
     public function validate($params = array())
@@ -137,11 +141,11 @@ class Controller extends Services
         $image_extensions = array('jpg', 'jpeg');
         $book_extensions = array('pdf', 'djvu');
 
-        $params = !empty($_POST["params"]) ? json_decode($_POST["params"], true) : $params;
-        $extra = !empty($_POST["extra"]) ? json_decode($_POST["extra"], true) : $params;
+        $params = !empty($_POST["params"]) ? json_decode($_POST["params"], TRUE) : $params;
+        $extra = !empty($_POST["extra"]) ? json_decode($_POST["extra"], TRUE) : $params;
 
         if (empty($params)) {
-            return false;
+            return FALSE;
         }
 
         $result = array();
@@ -211,7 +215,9 @@ class Controller extends Services
     /**
      * Удаление категории с всех книг в ней.
      * С подтверждением от пользователя.
-     * @param $id
+     *
+     * @param int $id
+     *
      * @return string
      */
     public function remove_category($id)
@@ -249,7 +255,9 @@ class Controller extends Services
 
     /**
      * Удаление книги с подтверждением
-     * @param $id
+     *
+     * @param int $id
+     *
      * @return string
      */
     public function remove_book($id)
@@ -287,7 +295,8 @@ class Controller extends Services
 
     /**
      * Форма изменения раздела
-     * @param $id
+     *
+     * @param int $id
      */
     public function edit_category($id)
     {
@@ -312,7 +321,9 @@ class Controller extends Services
 
     /**
      * Форма изменения книги
-     * @param $id
+     *
+     * @param int $id
+     *
      * @return string
      */
     public function edit_book($id)

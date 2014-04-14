@@ -5,10 +5,11 @@ class LayoutRenderer extends Renderer
 {
     /**
      * @param string $template Имя файла шаблона
-     * @param bool $out Если TRUE, выведет полученный HTML на экран. Иначе, вернет HTML.
+     * @param bool   $out      Если TRUE, выведет полученный HTML на экран. Иначе, вернет HTML.
+     *
      * @return string|void
      */
-    public function render($template = 'default', $out = true)
+    public function render($template = 'default', $out = TRUE)
     {
         if (!empty(self::$params)) {
             foreach (self::$params as $key => $value) {
