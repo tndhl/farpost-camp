@@ -25,6 +25,7 @@
         <div class="layout">
             <ul>
                 <li class="active"><a href="/" title="Главная">Главная</a></li>
+                <li><a href="/news" title="Новости и уведомления">Новости</a></li>
                 <li><a href="/" title="Документы">Документы</a></li>
                 <li><a href="/" title="Файлообменник">Файлообменник</a></li>
                 <li><a href="/lib" title="Библиотека">Библиотека</a></li>

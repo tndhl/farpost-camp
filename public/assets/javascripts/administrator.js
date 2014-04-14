@@ -53,6 +53,9 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Удаление роли у пользователя
+     */
     $('.user-remove-role').click(function () {
         var uid = $(this).data('uid');
         var rid = $(this).data('rid');
