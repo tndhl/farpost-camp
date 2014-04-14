@@ -1,20 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Alexander
- * Date: 3/18/14
- * Time: 6:17 PM
- */
-
 namespace tests;
 
 use PHPUnit_Framework_TestSuite;
+use tests\app\ApplicationTests;
 
-class AllTests extends PHPUnit_Framework_TestSuite
+class AllTests
 {
     public static function suite()
     {
+        $suite = new PHPUnit_Framework_TestSuite('All Tests');
 
+        $suite->addTestSuite(ApplicationTests::suite());
+
+        return $suite;
     }
 }
  
