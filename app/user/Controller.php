@@ -196,7 +196,7 @@ class Controller extends Services
     {
         $User = new User();
 
-        $user = $User->getSignedUser();
+        $user = $User->getSignedUserLogin();
         $UserProvider = new UserProvider();
 
         if (empty($login)) {
@@ -204,7 +204,7 @@ class Controller extends Services
                 return $this->ViewRenderer->render('nologin');
             }
 
-            $user = $UserProvider->findUserByLogin($user["login"]);
+            $user = $UserProvider->findUserByLogin($user);
             $pageTitle = "Ваш профиль";
         } else {
             $user = $UserProvider->findUserByLogin($login);

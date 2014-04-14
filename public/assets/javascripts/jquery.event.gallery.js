@@ -55,7 +55,6 @@ function ChunkedUploader(file, elem, eventId) {
 
         setTimeout(function(){
             $.ajax({
-                async: true,
                 url: self.options.url,
                 type: "POST",
                 data: formData,

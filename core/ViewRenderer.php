@@ -7,7 +7,7 @@ class ViewRenderer extends Renderer
 
     public function __construct($component)
     {
-        $this->componentViewDirectory = explode("\\", strtolower(str_replace("\Controller", "", $component)));
+        $this->componentViewDirectory = explode("\\", strtolower(str_replace('\Controller', '', $component)));
         $this->componentViewDirectory[] = "views";
         $this->componentViewDirectory = APP_PATH . '/' . implode("/", $this->componentViewDirectory);
     }
@@ -26,7 +26,7 @@ class ViewRenderer extends Renderer
         }
 
         ob_start();
-        require_once $this->componentViewDirectory . '/' . $view . '.php';
+        require_once $this->componentViewDirectory . '/' . $view . '.html.php';
         $view = ob_get_contents();
         ob_end_clean();
 
