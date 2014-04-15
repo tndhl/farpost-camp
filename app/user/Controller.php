@@ -70,7 +70,7 @@ class Controller extends Services
         foreach ($params as $attribute => $value) {
             if (in_array($attribute, $this->required_params)) {
                 if (strlen($value) == 0) {
-                    $result[] = $attribute;
+                    $result[] = array("element" => $attribute);
                 }
             }
         }
@@ -80,7 +80,7 @@ class Controller extends Services
          */
         if (($email = $params["login"])) {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $result[] = "login";
+                $result[] = array("element" => "login", "error" => "Неверный формат почтового адреса");
             }
         }
 

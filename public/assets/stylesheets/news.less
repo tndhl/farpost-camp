@@ -1,113 +1,117 @@
 .container.news-item {
-  header {
-    h1 {
-      margin-bottom: 5px;
+    header {
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        span {
+            color: #b3b3b3;
+            margin-right: 20px;
+        }
     }
 
-    span {
-      color: #b3b3b3;
-      margin-right: 20px;
-    }
-  }
-
-  .gallery {
-    position: relative;
-
-    .gallery-uploader {
-      width: 250px;
-      overflow: hidden;
-      position: relative;
-
-      .btn-blue;
-      float: none;
-      padding: 0;
-
-      span {
-        position: absolute;
-        top: 8.5px;
-        left: 6px;
-      }
-
-      input {
-        filter: alpha(opacity=0);
-        opacity: 0;
-        padding: 7px;
-      }
-    }
-
-    .gallery-progress {
-      display: block;
-      margin-top: 15px;
-
-      .item {
+    .gallery {
         position: relative;
-        margin-bottom: 5px;
 
-        .preview {
-          display: inline-block;
-          width: 40px;
-          height: 40px;
-          margin-right: 9px;
+        .gallery-uploader {
+            width: 250px;
+            overflow: hidden;
+            position: relative;
 
-          background-color: gray;
+            .btn-blue;
+            float: none;
+            padding: 0;
+
+            span {
+                position: absolute;
+                top: 8.5px;
+                left: 6px;
+            }
+
+            input {
+                filter: alpha(opacity=0);
+                opacity: 0;
+                padding: 7px;
+            }
         }
 
-        .loading-bar {
-          width: 760px;
-          height: 25px;
-          margin-bottom: 7.5px;
-          display: inline-block;
-          background-color: #d9d9d9;
+        .gallery-progress {
+            display: block;
+            margin-top: 15px;
 
-          .loaded {
-            background-color: #747474;
-            height: 25px;
-            text-align: center;
-            color: #f0f0f0;
-            width: 0%;
-            max-width: 100%;
+            .item {
+                position: relative;
+                margin-bottom: 5px;
 
-            -webkit-transition: width .1s;-moz-transition: width .1s;-ms-transition: width .1s;-o-transition: width .1s;transition: width .1s;
-          }
+                .preview {
+                    display: inline-block;
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 9px;
+
+                    background-color: gray;
+                }
+
+                .loading-bar {
+                    width: 760px;
+                    height: 25px;
+                    margin-bottom: 7.5px;
+                    display: inline-block;
+                    background-color: #d9d9d9;
+
+                    .loaded {
+                        background-color: #747474;
+                        height: 25px;
+                        text-align: center;
+                        color: #f0f0f0;
+                        width: 0%;
+                        max-width: 100%;
+
+                        -webkit-transition: width .1s;
+                        -moz-transition: width .1s;
+                        -ms-transition: width .1s;
+                        -o-transition: width .1s;
+                        transition: width .1s;
+                    }
+                }
+
+                .status {
+                    position: absolute;
+                    display: inline-block;
+                    line-height: 40px;
+                    width: 140px;
+                    height: 40px;
+                    margin-left: 15px;
+                }
+            }
         }
 
-        .status {
-          position: absolute;
-          display: inline-block;
-          line-height: 40px;
-          width: 140px;
-          height: 40px;
-          margin-left: 15px;
+        .alert {
+            border: 0;
+            padding: 20px 0;
+            padding-top: 0;
+            color: #b3b3b3;
         }
-      }
+
+        .gallery-content {
+            line-height: 0;
+
+            -webkit-column-count: 4;
+            -moz-column-count: 4;
+            column-count: 4;
+
+            -webkit-column-gap: 4px;
+            -moz-column-gap: 4px;
+            column-gap: 4px;
+
+            .photo {
+                margin-bottom: 4px;
+
+                img {
+                    width: 100% !important;
+                    height: auto !important;
+                }
+            }
+        }
     }
-
-    .alert {
-      border: 0;
-      padding: 20px 0;
-      padding-top: 0;
-      color: #b3b3b3;
-    }
-
-    .gallery-content {
-      line-height: 0;
-      
-      -webkit-column-count: 4;
-      -moz-column-count: 4;
-      column-count: 4;
-
-      -webkit-column-gap: 4px;
-      -moz-column-gap: 4px;
-      column-gap: 4px;
-
-      .photo {
-        margin-bottom: 4px;
-
-        img {
-          width: 100% !important;
-          height: auto !important;
-        }
-      }
-    }
-  }
 }

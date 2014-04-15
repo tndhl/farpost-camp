@@ -10,7 +10,7 @@ function displayBlock(parameters) {
     var title = parameters.title;
     var message = parameters.html || parameters.message;
 
-    var alertBox = $('.popup');
+    var alertBox = $('.popup-block');
     $(alertBox).hide();
 
     $(alertBox).find('.title').text(title);
@@ -26,4 +26,26 @@ function displayBlock(parameters) {
     });
 
     $(alertBox).center().fadeIn('fast');
+}
+
+function hideMessage() {
+    $(document).find('.popup-message').fadeOut('fast').remove();
+}
+
+function showMessage(options) {
+    var opt = $.extend({
+        timeout: 4000
+    }, options);
+
+    hideMessage();
+
+    var $messageBox = $('<div class="popup-message"/>').text(opt.message).hide();
+    $(document.body).append($messageBox);
+    $messageBox.css('left', ($(document).width() - $messageBox.outerWidth()) / 2);
+
+    $messageBox.fadeIn('fast');
+
+    setTimeout(function(){
+        $messageBox.fadeOut('fast');
+    }, opt.timeout);
 }

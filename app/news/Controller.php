@@ -45,7 +45,7 @@ class Controller extends Services
 
         $data = json_decode($_POST["data"], true);
 
-        $eventId = intval($data["eventId"]);
+        $eventId = intval($data["entryId"]);
         $filename = $data["filename"];
         $filesize = $data["filesize"];
         $uniqueId = $data["uniqueId"];

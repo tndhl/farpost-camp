@@ -1,99 +1,99 @@
 ul.library-category-list {
-  li {
-    padding-bottom: 6px;
+    li {
+        padding-bottom: 6px;
 
-    a {
-      text-decoration: none;
+        a {
+            text-decoration: none;
 
-      &:hover {
-        text-decoration: underline;
-      }
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &:last-child {
+            padding: 0;
+        }
+
+        &:before {
+            content: '\02014\0a0';
+        }
     }
-
-    &:last-child {
-      padding: 0;
-    }
-
-    &:before {
-      content: '\02014\0a0';
-    }
-  }
 }
 
 .add-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 4px !important;
-  font-size: 12px;
-  .btn-blue;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px !important;
+    font-size: 12px;
+    .btn-blue;
 }
 
 .library {
-  .col {
-    .book {
-      display: table;
-      width: 100%;
-      padding: 10px;
-      background-color: #f4f4f4;
-      border: 1px solid #e1e1e1;
-      margin-bottom: 20px;
+    .col {
+        .book {
+            display: table;
+            width: 100%;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #e1e1e1;
+            margin-bottom: 20px;
 
-      box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
 
-      .image {
-        float: left;
-        display: inline-block;
-        vertical-align: top;
+            .image {
+                float: left;
+                display: inline-block;
+                vertical-align: top;
 
-        img {
-          width: 100px;
+                img {
+                    width: 100px;
+                }
+            }
+
+            .description {
+                width: calc(~"100% - 110px");
+                margin-left: 10px;
+                margin-top: -5px;
+                float: left;
+                display: inline-block;
+
+                span {
+                    display: block;
+                    font-style: italic;
+                    font-size: 13px;
+                    color: gray;
+                }
+
+                div {
+                    word-wrap: break-word;
+                    margin-top: 10px;
+
+                    &:first-child {
+                        margin: 0;
+                    }
+                }
+            }
         }
-      }
-
-      .description {
-        width: calc(~"100% - 110px");
-        margin-left: 10px;
-        margin-top: -5px;
-        float: left;
-        display: inline-block;
-
-        span {
-          display: block;
-          font-style: italic;
-          font-size: 13px;
-          color: gray;
-        }
-
-        div {
-          word-wrap: break-word;
-          margin-top: 10px;
-
-          &:first-child {
-            margin: 0;
-          }
-        }
-      }
     }
-  }
 }
 
 .library-book {
-  .col {
-    img {
-      width: 100%;
-    }
+    .col {
+        img {
+            width: 100%;
+        }
 
-    div {
-      margin-bottom: 20px;
+        div {
+            margin-bottom: 20px;
 
-      span {
-        display: block;
-        color: gray;
-        margin-bottom: 2px;
-      }
+            span {
+                display: block;
+                color: gray;
+                margin-bottom: 2px;
+            }
+        }
     }
-  }
 }

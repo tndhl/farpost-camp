@@ -37,8 +37,8 @@ $(document).find('form').submit(function () {
         data: { params: JSON.stringify(params), extra: JSON.stringify(extra_params) },
         success: function (result) {
             if (result.length > 0) for (var key in result) {
-                $form.find('[name=' + result[key] + ']').addClass(error.inputClass);
-                $form.find('[name=' + result[key] + ']').parent().find('span.' + error.errorClass).text(error.msg);
+                $form.find('[name=' + result[key].element + ']').addClass(error.inputClass);
+                $form.find('[name=' + result[key].element + ']').parent().find('span.' + error.errorClass).text(result[key].error || error.msg);
             } else {
                 isNotFailed = true;
             }

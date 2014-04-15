@@ -1,0 +1,112 @@
+.disk {
+    position: relative;
+
+    ul.nav {
+        li {
+            margin-bottom: 5px;
+
+            &.active > a {
+                background-color: #5194eb;
+                color: #ffffff;
+            }
+
+            a {
+                display: block;
+                text-decoration: none;
+                line-height: 40px;
+                padding-left: 5px;
+
+                &:hover {
+                    background-color: #3e83eb;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
+    ul.disk-actions {
+        li {
+            cursor: pointer;
+            margin-bottom: 5px;
+
+            display: block;
+            line-height: 40px;
+            padding-left: 5px;
+
+            &:hover {
+                background-color: #3e83eb;
+                color: #ffffff;
+            }
+        }
+    }
+
+    .block-title {
+        margin-top: 15px;
+        color: #b3b3b3;
+    }
+
+    .empty-list {
+        color: #b3b3b3;
+        text-align: center;
+        height: 60px !important;
+    }
+
+    .empty-feed {
+        color: #b3b3b3;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    table.files {
+        width: 100%;
+        font-size: 15px;
+
+        thead {
+            tr {
+                th {
+                    font-weight: 500;
+                    color: #b3b3b3;
+                    padding-bottom: 15px;
+                    border-bottom: 1px solid #b33741;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                height: 40px;
+
+                td {
+                    &.select {
+                        input[type="checkbox"] {
+                            line-height: 40px;
+                            margin: 0;
+                            margin-top: 5px;
+                            padding: 0;
+                        }
+                    }
+
+                    &.title {
+                        .text-left;
+                    }
+
+                    &.created {
+                        .text-center;
+                    }
+
+                    &.size {
+                        .text-center;
+                    }
+
+                    &.options {
+                        .text-center;
+                    }
+                }
+
+                &.not-verified {
+                    color: gray;
+                }
+            }
+        }
+    }
+}

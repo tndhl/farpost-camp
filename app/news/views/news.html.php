@@ -38,6 +38,7 @@
             </div>
         </div>
 
+        <script src="/public/assets/javascripts/jquery.uploader.js"></script>
         <script src="/public/assets/javascripts/jquery.event.gallery.js"></script>
         <script>
             $(document).ready(function () {

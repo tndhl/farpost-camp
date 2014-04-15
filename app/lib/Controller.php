@@ -156,9 +156,9 @@ class Controller extends Services
             $ext = strtolower(array_pop($ext));
 
             if (strlen($params["book"]) == 0) {
-                $result[] = "book";
+                $result[] = array("element" => "book");
             } elseif (!in_array($ext, $book_extensions)) {
-                $result[] = "book";
+                $result[] = array("element" => "book", "error" => "Неверный формат файла");
             }
         }
 
@@ -166,14 +166,14 @@ class Controller extends Services
         $image_ext = strtolower(array_pop($image_ext));
 
         if (!in_array($image_ext, $image_extensions)) {
-            $result[] = "image";
+            $result[] = array("element" => "image", "error" => "Неверный формат файла");
         }
 
         // Простая проверка на длинну > 0
         foreach ($params as $attribute => $value) {
             if (in_array($attribute, $required_params)) {
                 if (strlen($value) == 0) {
-                    $result[] = $attribute;
+                    $result[] = array("element" => $attribute);
                 }
             }
         }

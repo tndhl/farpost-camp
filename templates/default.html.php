@@ -27,7 +27,7 @@
                 <li class="active"><a href="/" title="Главная">Главная</a></li>
                 <li><a href="/news" title="Новости и уведомления">Новости</a></li>
                 <li><a href="/" title="Документы">Документы</a></li>
-                <li><a href="/" title="Файлообменник">Файлообменник</a></li>
+                <li><a href="/disk" title="Файлообменник">Файлообменник</a></li>
                 <li><a href="/lib" title="Библиотека">Библиотека</a></li>
                 <li><a href="/" title="Форум">Форум</a></li>
             </ul>
@@ -44,7 +44,11 @@
 <div class="footer">
 </div>
 
-<div class="popup">
+<div class="messenger">
+    <div class="title"><i class="fa fa-comments fa-fw"></i> Чат</div>
+</div>
+
+<div class="popup-block">
     <div class="title"></div>
     <a class="close" href="#">&times;</a>
 
