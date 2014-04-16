@@ -22,7 +22,9 @@ class Controller extends Services
 
     /**
      * Создание хеша активации на основе данных пользователя
+     *
      * @param  array $params
+     *
      * @return string
      */
     private function createActivationHash($params)
@@ -39,7 +41,9 @@ class Controller extends Services
 
     /**
      * Расшифровка хеша активации
+     *
      * @param $hash
+     *
      * @return array Данные пользователя для активации
      */
     private function decryptActivationHash($hash)
@@ -51,15 +55,17 @@ class Controller extends Services
 
     /**
      * Валидация формы (\w AJAX)
+     *
      * @param array|bool $params Параметры формы
+     *
      * @return array Параметры, не прошедшие проверку
      */
-    public function validate($params = false)
+    public function validate($params = FALSE)
     {
-        $params = !empty($_POST["params"]) ? json_decode($_POST["params"], true) : $params;
+        $params = !empty($_POST["params"]) ? json_decode($_POST["params"], TRUE) : $params;
 
         if (empty($params)) {
-            return false;
+            return FALSE;
         }
 
         $result = array();
@@ -291,6 +297,41 @@ class Controller extends Services
             }
         }
 
+        exit();
+    }
+
+    /**
+     * @AJAX
+     *
+     * Сохранить значение поля в профиле
+     */
+    public function save_field()
+    {
+        $provider = new UserProvider();
+        $user = (new User())->getCurrentUser();
+
+        $data = $_POST["data"];
+
+        if ($user->id != $data[0]["user_id"]) {
+            if (!$user->hasRole('Администратор')) {
+                echo json_encode(["error" => "У вас нет прав для выполнения этой операции"]);
+                exit();
+            }
+        }
+
+        foreach ($data as $field) {
+            if ($field["field_id"]) {
+                if (!$provider->updateUserXField($field["user_id"], $field["field_id"], $field["value"])) {
+                    echo json_encode(["error" => "Возникли ошибки при обновлении поля: " . $field["title"]]);
+                }
+            } else {
+                if (!$provider->updateUserField($field["user_id"], $field["name"], $field["value"])) {
+                    echo json_encode(["error" => "Возникли ошибки при обновлении поля: " . $field["title"]]);
+                }
+            }
+        }
+
+        echo json_encode(["message" => "Данные профиля успешно обновлены"]);
         exit();
     }
 }

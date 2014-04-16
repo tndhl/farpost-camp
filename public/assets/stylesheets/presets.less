@@ -35,9 +35,9 @@
 .text-center { text-align: center; }
 .text-right { text-align: right; }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 
-.btn-blue() {
+.btn() {
     display: block;
     text-decoration: none;
     outline: none;
@@ -45,6 +45,17 @@
     padding: 7px;
     float: left;
     clear: left;
+}
+
+.btn-blue() {
+    .btn;
     border: 1px solid darken(#3e83eb, 5%);
     .gradient(#3e83eb, #3375d7);
+}
+
+.btn-gray() {
+    .btn;
+    color: #ffffff;
+    border: 1px solid darken(#373737, 5%);
+    .gradient(#4c4c4c, #2b2b2b);
 }

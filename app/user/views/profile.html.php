@@ -25,35 +25,44 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
-
-
         </div>
 
         <div class="col col-9">
-            <form method="post">
+            <form method="post" data-userid="<?= $profile->id; ?>">
                 <div class="inline">
                     <div class="group">
                         <label for="inputLastname">Фамилия</label>
-                    <span class="editable" data-type="text"
-                          data-name="lastname"><?= $profile->lastname; ?></span>
+                        <span class="editable"
+                              data-name="lastname"
+                              data-html-tag="input"
+                              data-html-tag-type="text"><?= $profile->lastname; ?></span>
                     </div>
 
                     <div class="group">
                         <label for="inputFirstname">Имя</label>
-                    <span class="editable" data-type="text"
-                          data-name="lastname"><?= $profile->firstname; ?></span>
+                        <span class="editable"
+                              data-name="firstname"
+                              data-html-tag="input"
+                              data-html-tag-type="text"><?= $profile->firstname; ?></span>
                     </div>
                 </div>
 
                 <?php foreach ($profile->xfields as $xfield): ?>
                     <div class="group">
                         <label for="input<?= $xfield["alt"]; ?>"><?= $xfield["title"]; ?></label>
-                    <span class="editable" data-fid="<?= $xfield["id"]; ?>">
-                        <?= $xfield["value"] ? $xfield["value"] : 'NULL'; ?>
-                    </span>
+                        <span class="editable"
+                              data-name="<?= $xfield["alt"]; ?>"
+                              data-html-tag="<?= $xfield["html_tag"]; ?>"
+                              data-html-tag-type="<?= $xfield["html_tag_type"]; ?>"
+                              data-fid="<?= $xfield["id"]; ?>"><?= !empty($xfield["value"]) ? $xfield["value"] : 'не заполнено'; ?></span>
                     </div>
                 <?php endforeach; ?>
+
+                <button type="button" class="btn btn-save hidden">Сохранить изменения</button>
+                <button type="button" class="btn btn-cancel hidden">Отменить</button>
             </form>
         </div>
     </div>
 </div>
+
+<script src="/public/assets/javascripts/profile.edit.js"></script>

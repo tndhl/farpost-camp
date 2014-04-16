@@ -8,7 +8,9 @@ class UserProvider extends Provider
 {
     /**
      * Добавление нового пользователя в БД
+     *
      * @param array $params Данные пользователя
+     *
      * @return bool
      */
     public function addUser($params = array())
@@ -31,15 +33,17 @@ class UserProvider extends Provider
             $sth->bindParam(':uid', $uid);
             $sth->execute();
 
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
      * Поиск пользователя по логину
+     *
      * @param  string $login Email
+     *
      * @return UserEntity
      */
     public function findUserByLogin($login)
@@ -55,7 +59,7 @@ class UserProvider extends Provider
         $user = $user->fetch();
 
         $xfields = $this->prepare(
-            "SELECT id, title, alt, value, html_tag, html_tag_type
+            "SELECT id, title, alt, user_field_value.value, html_tag, html_tag_type
             FROM user_field
             LEFT JOIN user_field_value ON user_field.id = user_field_value.fid AND user_field_value.uid = ?"
         );
@@ -68,7 +72,9 @@ class UserProvider extends Provider
 
     /**
      * Проверка на существование пользователя
+     *
      * @param  string $login E-mail
+     *
      * @return boolean
      */
     public function isUserExists($login)
@@ -83,20 +89,85 @@ class UserProvider extends Provider
         $sth->execute();
 
         if ($sth->rowCount() == 1) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
+    /**
+     * Активация пользователя по логину
+     *
+     * @param string $login Логин пользователя
+     *
+     * @return bool
+     */
     public function activateUser($login)
     {
         $sth = $this->prepare("UPDATE user SET activate_time = NOW() WHERE login LIKE ?");
 
         if ($sth->execute(array($login))) {
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
+    }
+
+    /**
+     * Сохранине значения поля в профиле пользователя
+     *
+     * @param int    $user_id ИД пользователя
+     * @param string $field   Имя поля
+     * @param string $value   Значение поля
+     */
+    public function updateUserField($user_id, $field, $value)
+    {
+        $available_profile_fields = ["firstname", "lastname"];
+
+        if (!in_array($field, $available_profile_fields)) {
+            return FALSE;
+        }
+
+        $querystr =
+            "UPDATE user
+            SET $field = ?
+            WHERE id = ?
+            LIMIT 1";
+
+        $sth = $this->prepare($querystr);
+
+        if ($sth->execute(array($value, $user_id))) {
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    /**
+     * Сохранине значения доп. поля в профиле пользователя
+     *
+     * @param int    $user_id  ИД пользователя
+     * @param int    $field_id ИД поля
+     * @param string $value    Значение поля
+     *
+     * @return bool
+     */
+    public function updateUserXField($user_id, $field_id, $value)
+    {
+        $sth = $this->prepare(
+            'INSERT INTO user_field_value (fid, uid, value)
+            VALUES (:fid, :uid, :value)
+            ON DUPLICATE KEY UPDATE value = :value'
+        );
+
+        $sth->bindParam(':fid', $field_id, \PDO::PARAM_INT);
+        $sth->bindParam(':uid', $user_id, \PDO::PARAM_INT);
+        $sth->bindParam(':value', $value, \PDO::PARAM_STR);
+
+        if ($sth->execute()) {
+            return TRUE;
+        }
+
+        return FALSE;
     }
 }

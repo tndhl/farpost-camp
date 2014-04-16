@@ -1,7 +1,8 @@
 <?php
 namespace Core;
 
-error_reporting(-1);
+error_reporting(0);
+@ini_set('display_errors', 0);
 
 define("APP_PATH", realpath(dirname(__FILE__)));
 
