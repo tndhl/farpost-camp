@@ -46,7 +46,21 @@
 
 <div class="messenger">
     <div class="title"><i class="fa fa-comments fa-fw"></i> Чат</div>
+
+    <div class="chat">
+        <div class="messages">
+
+        </div>
+
+        <div class="controls">
+            <input type="text" id="message">
+            <button class="btn">Отправить</button>
+        </div>
+    </div>
+
+    <script src="/public/assets/javascripts/jquery.messenger.js"></script>
 </div>
+
 
 <div class="popup-block">
     <div class="title"></div>
