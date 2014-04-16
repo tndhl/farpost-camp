@@ -53,14 +53,14 @@
                     <?php if ($book->isOwned()): ?>
                         <?php if ($user->isInBookQueue($book->id)): ?>
                             <a href="/lib/remove_queue/<?= $book->id; ?>/<?= $user->id; ?>"
-                               class="btn">Выйти из очереди</a>
+                               class="btn-default">Выйти из очереди</a>
                         <?php else: ?>
                             <a href="/lib/add_queue/<?= $book->id; ?>/<?= $user->id; ?>"
-                               class="btn">Встать в очередь</a>
+                               class="btn-default">Встать в очередь</a>
                         <?php endif; ?>
                     <?php else: ?>
                         <a href="/lib/add_queue/<?= $book->id; ?>/<?= $user->id; ?>/1"
-                           class="btn">Взять книгу</a>
+                           class="btn-default">Взять книгу</a>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>

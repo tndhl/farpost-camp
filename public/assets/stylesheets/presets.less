@@ -37,7 +37,7 @@
 
 .hidden { display: none !important; }
 
-.btn() {
+.button() {
     display: block;
     text-decoration: none;
     outline: none;
@@ -48,14 +48,30 @@
 }
 
 .btn-blue() {
-    .btn;
+    .button;
     border: 1px solid darken(#3e83eb, 5%);
     .gradient(#3e83eb, #3375d7);
+
+    &:hover {
+        .gradient(#337adb, #366bcf);
+    }
+
+    &:active {
+        .gradient(#366bcf, #337adb);
+    }
 }
 
-.btn-gray() {
-    .btn;
+.btn-dark() {
+    .button;
     color: #ffffff;
     border: 1px solid darken(#373737, 5%);
-    .gradient(#4c4c4c, #2b2b2b);
+    .gradient(#464646, #2b2b2b);
+
+    &:hover {
+        .gradient(#414141, #212121);
+    }
+
+    &:active {
+        .gradient(#212121, #414141);
+    }
 }

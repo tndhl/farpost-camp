@@ -29,24 +29,13 @@ span {
     display: inline-block;
 }
 
-.btn {
-    .btn-blue;
+.btn { .button }
 
-    &.btn-cancel {
-        .btn-gray;
-    }
-}
+.btn-default { .btn-blue; }
+.btn-cancel { .btn-dark; }
 
 .btn + .btn {
     clear: none;
-}
-
-hr {
-    width: 100%;
-    height: 1px;
-    background-color: #d5d5d5;
-    border: 0;
-    margin: 20px 0;
 }
 
 .btn-back {
@@ -56,6 +45,13 @@ hr {
     .btn-blue;
     padding: 3px;
     font-size: 15px;
+}
+
+hr {
+    height: 1px;
+    background-color: #d5d5d5;
+    border: 0;
+    margin: 20px -15px;
 }
 
 .layout {

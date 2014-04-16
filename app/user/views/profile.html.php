@@ -58,8 +58,8 @@
                     </div>
                 <?php endforeach; ?>
 
-                <button type="button" class="btn btn-save hidden">Сохранить изменения</button>
-                <button type="button" class="btn btn-cancel hidden">Отменить</button>
+                <button type="button" class="btn-default hidden">Сохранить изменения</button>
+                <button type="button" class="btn-cancel hidden">Отменить</button>
             </form>
         </div>
     </div>

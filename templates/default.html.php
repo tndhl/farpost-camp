@@ -53,7 +53,7 @@
 
         <div class="controls">
             <input type="text" id="message">
-            <button class="btn">Отправить</button>
+            <button class="btn-default">Отправить</button>
         </div>
     </div>
 

@@ -10,7 +10,7 @@
         <p><?= $item["content"]; ?></p>
 
         <div class="footer">
-            <a class="btn pull-right" href="/news/<?= $item['id']; ?>">Подробнее</a>
+            <a class="btn-default pull-right" href="/news/<?= $item['id']; ?>">Подробнее</a>
         </div>
     </div>
 <?php endforeach; ?>

@@ -81,7 +81,7 @@ $(document).ready(function () {
         $('.user-profile button').removeClass('hidden');
     });
 
-    $('.user-profile button.btn-save').bind('click', saveData);
+    $('.user-profile button.btn-default').bind('click', saveData);
     $('.user-profile button.btn-cancel').bind('click', function () {
         hideEditAreas(false);
     });
