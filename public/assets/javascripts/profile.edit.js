@@ -63,9 +63,15 @@ $(document).ready(function () {
 
         $(span).hide();
         $(html_tag).insertAfter(span);
+
+        if ($(span).text() != "не заполнено") {
+            $(html_tag).text($(span).text());
+            $(html_tag).val($(span).text());
+        }
+
         $(html_tag).focus();
 
-        $(html_tag).keypress(function(event) {
+        $(html_tag).keypress(function (event) {
             if (event.keyCode == 13) {
                 event.preventDefault();
                 saveData();
@@ -76,7 +82,7 @@ $(document).ready(function () {
     });
 
     $('.user-profile button.btn-save').bind('click', saveData);
-    $('.user-profile button.btn-cancel').bind('click', function() {
+    $('.user-profile button.btn-cancel').bind('click', function () {
         hideEditAreas(false);
     });
 });
