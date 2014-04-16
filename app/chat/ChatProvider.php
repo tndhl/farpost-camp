@@ -61,7 +61,7 @@ class ChatProvider extends Provider
         $this->exec("SET lc_time_names = 'ru_RU'");
 
         $sth = $this->prepare(
-            'SELECT chat_message.id, concat(firstname, " ", lastname) as username, message, DATE_FORMAT(datetime, "%W, %d/%m/%Y %H:%s") AS datetime
+            'SELECT chat_message.id, concat(firstname, " ", lastname) as username, message, DATE_FORMAT(datetime, "%W, %d/%m/%Y %H:%i") AS datetime
             FROM chat_message
             INNER JOIN user ON user.id = user_id
             WHERE chat_message.id = ?'
@@ -90,7 +90,7 @@ class ChatProvider extends Provider
         }
 
         $sth = $this->prepare(
-            'SELECT chat_message.id, concat(firstname, " ", lastname) as username, message, DATE_FORMAT(datetime, "%W, %d/%m/%Y %H:%s") AS datetime
+            'SELECT chat_message.id, concat(firstname, " ", lastname) as username, message, DATE_FORMAT(datetime, "%W, %d/%m/%Y %H:%i") AS datetime
             FROM chat_message
             INNER JOIN user ON user.id = user_id
             ' . $WHERE . '

@@ -256,7 +256,7 @@ class DiskProvider extends Provider
 
     /**
      * Одобряет файл
-     * 
+     *
      * @param int $id ИД файла
      *
      * @return bool
