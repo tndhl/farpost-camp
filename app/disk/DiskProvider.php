@@ -5,6 +5,13 @@ use Core\Database\Provider;
 
 class DiskProvider extends Provider
 {
+    /**
+     * Возвращает список файлов у пользователя
+     *
+     * @param int $user_id ИД пользователя
+     *
+     * @return \Utils\Disk\FileEntity[]
+     */
     public function getUserFileList($user_id)
     {
         $sth = $this->prepare(
@@ -19,6 +26,13 @@ class DiskProvider extends Provider
         return $sth->fetchAll(\PDO::FETCH_CLASS, '\Utils\Disk\FileEntity');
     }
 
+    /**
+     * Поиск файла по его ИД
+     *
+     * @param int $file_id ИД файла
+     *
+     * @return \Utils\Disk\FileEntity
+     */
     public function getFileById($file_id)
     {
         $sth = $this->prepare(
@@ -33,6 +47,14 @@ class DiskProvider extends Provider
         return $sth->fetch();
     }
 
+    /**
+     * Проверка, принадлежит ли файл пользователю
+     *
+     * @param int $file_id ИД файла
+     * @param int $user_id ИД пользователя
+     *
+     * @return bool
+     */
     public function isFileRefersToUser($file_id, $user_id)
     {
         $sth = $this->prepare(
@@ -47,6 +69,14 @@ class DiskProvider extends Provider
         return $sth->rowCount() > 0;
     }
 
+    /**
+     * Проверка, принадлежат ли файлы пользователю
+     *
+     * @param array $files   Массив ИД файлов
+     * @param int   $user_id ИД пользователя
+     *
+     * @return bool
+     */
     public function isFilesReferToUser(Array $files, $user_id)
     {
         $placeholders = implode(", ", array_fill(0, count($files), '?'));
@@ -66,6 +96,13 @@ class DiskProvider extends Provider
         return $sth->rowCount() > 0;
     }
 
+    /**
+     * Проверка, находится ли файл в общем доступе
+     *
+     * @param int $file_id ИД файла
+     *
+     * @return bool
+     */
     public function isFileShared($file_id)
     {
         $sth = $this->prepare(
@@ -80,6 +117,13 @@ class DiskProvider extends Provider
         return (bool)$sth->fetchColumn();
     }
 
+    /**
+     * Удаление файла
+     *
+     * @param int $file_id ИД файла
+     *
+     * @return bool
+     */
     public function removeFileById($file_id)
     {
         $sth = $this->prepare(
@@ -94,6 +138,18 @@ class DiskProvider extends Provider
         return FALSE;
     }
 
+    /**
+     * Добавление файла
+     *
+     * @param int    $userId      ИД пользователя
+     * @param string $title       Название файла
+     * @param string $format      Тип файла
+     * @param string $filename    Имя файла
+     * @param int    $filesize    Размер файла
+     * @param string $REMOTE_ADDR IP адрес пользователя
+     *
+     * @return bool|\Utils\Disk\FileEntity
+     */
     public function addFile($userId, $title, $format, $filename, $filesize, $REMOTE_ADDR)
     {
         $sth = $this->prepare(
@@ -108,6 +164,13 @@ class DiskProvider extends Provider
         return FALSE;
     }
 
+    /**
+     * Предоставление файла в общий доступ
+     *
+     * @param int $id ИД файла
+     *
+     * @return bool
+     */
     public function shareFileById($id)
     {
         if (is_array($id)) {
@@ -131,6 +194,13 @@ class DiskProvider extends Provider
         return FALSE;
     }
 
+    /**
+     * Возвращает размер занятого места на диске пользователя
+     *
+     * @param int $user_id ИД пользователя
+     *
+     * @return int Размер в байтах
+     */
     public function getUserDiskSize($user_id)
     {
         $sth = $this->prepare(
@@ -145,6 +215,11 @@ class DiskProvider extends Provider
         return $sth->fetchColumn();
     }
 
+    /**
+     * Возвращает список файлов находящихся в общем доступе
+     *
+     * @return \Utils\Disk\FileEntity[]
+     */
     public function getSharedFileList()
     {
         $sth = $this->prepare(
@@ -160,6 +235,11 @@ class DiskProvider extends Provider
         return $sth->fetchAll(\PDO::FETCH_CLASS, '\Utils\Disk\FileEntity');
     }
 
+    /**
+     * Возвращает список файлов ожидающих проверку
+     *
+     * @return \Utils\Disk\FileEntity
+     */
     public function getPendingFileList()
     {
         $sth = $this->prepare(
@@ -174,6 +254,13 @@ class DiskProvider extends Provider
         return $sth->fetchAll(\PDO::FETCH_CLASS, '\Utils\Disk\FileEntity');
     }
 
+    /**
+     * Одобряет файл
+     * 
+     * @param int $id ИД файла
+     *
+     * @return bool
+     */
     public function verifyFileById($id)
     {
         $sth = $this->prepare(

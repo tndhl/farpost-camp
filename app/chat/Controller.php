@@ -6,6 +6,11 @@ use Library\User;
 
 class Controller extends Services
 {
+    /**
+     * @AJAX
+     *
+     * Возвращает новые сообщения для пользователя, если они есть
+     */
     public function getMessageList()
     {
         $chat = new ChatProvider();
@@ -33,6 +38,11 @@ class Controller extends Services
         }
     }
 
+    /**
+     * @AJAX
+     *
+     * Добавляет новое сообщение в базу или возвращает ошибку
+     */
     public function sendMessage()
     {
         $chat = new ChatProvider();

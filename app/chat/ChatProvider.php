@@ -5,6 +5,15 @@ use Core\Database\Provider;
 
 class ChatProvider extends Provider
 {
+    /**
+     * Добавить сообщение в базу
+     *
+     * @param int    $user_id ИД пользователя
+     * @param string $message Сообщение пользователя
+     * @param string $ip      IP адрес пользователя
+     *
+     * @return bool|int ИД добавленного сообщения, если успешно
+     */
     public function addMessage($user_id, $message, $ip)
     {
         $sth = $this->prepare(
@@ -16,9 +25,16 @@ class ChatProvider extends Provider
             return $this->lastInsertId();
         }
 
-        return false;
+        return FALSE;
     }
 
+    /**
+     * Проверка, если ли новые сообщения для пользователя
+     *
+     * @param int $last_msg_id ИД последнего сообщения, показанного пользователю
+     *
+     * @return bool
+     */
     public function hasNewMessages($last_msg_id)
     {
         $sth = $this->prepare(
@@ -33,6 +49,13 @@ class ChatProvider extends Provider
         return $sth->rowCount() > 0;
     }
 
+    /**
+     * Возвращает данные о сообщении
+     *
+     * @param int $id ИД сообщения
+     *
+     * @return array
+     */
     public function getMessageById($id)
     {
         $this->exec("SET lc_time_names = 'ru_RU'");
@@ -49,7 +72,14 @@ class ChatProvider extends Provider
         return $sth->fetch();
     }
 
-    public function getMessageList($last_msg_id = false)
+    /**
+     * Возвращает список новых сообщений для пользователя
+     *
+     * @param bool|int $last_msg_id Если FALSE, то вернет список всех сообщений чата
+     *
+     * @return array
+     */
+    public function getMessageList($last_msg_id = FALSE)
     {
         $this->exec("SET lc_time_names = 'ru_RU'");
 

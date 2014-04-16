@@ -17,6 +17,14 @@ class Controller extends Services
         }
     }
 
+    /**
+     * Страница для модератора
+     * Список новых файлов с возможностью удалять или одобрять их
+     *
+     * Доступ: Кладовщик
+     *
+     * @return string
+     */
     public function feed()
     {
         $user = (new User())->getCurrentUser();
@@ -24,7 +32,7 @@ class Controller extends Services
 
         if (!$user->hasRole('Кладовщик')) {
             $this->setAlert('error', 'У вас нет доступа к этой странице.');
-            return FALSE;
+            return '';
         }
 
         $content = $this->ViewRenderer
@@ -34,6 +42,11 @@ class Controller extends Services
         return $this->buildContainer($content, 'disk/feed');
     }
 
+    /**
+     * Страница с файлами авторизированного пользователя
+     *
+     * @return string
+     */
     public function my()
     {
         $disk = new DiskProvider();
@@ -41,7 +54,7 @@ class Controller extends Services
 
         if (empty($user->id)) {
             $this->setAlert('error', 'У вас нет доступа к этой странице.');
-            return FALSE;
+            return '';
         }
 
         $content = $this->ViewRenderer
@@ -59,6 +72,11 @@ class Controller extends Services
         return $this->buildContainer($content, 'disk/my', $diskInfo, $diskActions);
     }
 
+    /**
+     * Страница с общими файлами
+     *
+     * @return string
+     */
     public function shared()
     {
         $disk = new DiskProvider();
@@ -70,6 +88,15 @@ class Controller extends Services
         return $this->buildContainer($content, 'disk/shared');
     }
 
+    /**
+     * @AJAX
+     *
+     * Открывает общий доступ к файлам
+     *
+     * Доступ: Кладовщик или владелец файла(ов)
+     *
+     * @internal array $_POST["list"] Массив ИД файлов
+     */
     public function share_files()
     {
         $disk = new DiskProvider();
@@ -94,6 +121,17 @@ class Controller extends Services
         exit();
     }
 
+    /**
+     * @AJAX
+     *
+     * Одобрить файл
+     *
+     * Доступ: Кладовщик
+     *
+     * @param int $id ИД файла
+     *
+     * @return string
+     */
     public function verify_file($id)
     {
         $disk = new DiskProvider();
@@ -102,11 +140,9 @@ class Controller extends Services
         $file = $disk->getFileById($id);
 
         if ($file === FALSE) {
-            $this->setAlert('error', 'Файл с таким ID не найден.');
+            print 'Файл с таким ID не найден';
 
-            if (!empty($user->id)) {
-                return $this->feed();
-            }
+            exit();
         }
 
         if ($user->hasRole('Кладовщик')) {
@@ -120,6 +156,15 @@ class Controller extends Services
         exit();
     }
 
+    /**
+     * Скачать файл
+     *
+     * Доступ: Кладовщик, владелец файла, или если файл в общем доступе
+     *
+     * @param int $id ИД файла
+     *
+     * @return void|string
+     */
     public function download_file($id)
     {
         $disk = new DiskProvider();
@@ -155,8 +200,21 @@ class Controller extends Services
                 return $this->my();
             }
         }
+
+        return '';
     }
 
+    /**
+     * @AJAX
+     *
+     * Удалить файл
+     *
+     * Доступ: Кладовщик или владелец файла
+     *
+     * @param int $id ИД файла
+     *
+     * @return string|void
+     */
     public function remove_file($id)
     {
         $disk = new DiskProvider();
@@ -179,7 +237,7 @@ class Controller extends Services
 
         if ($user->hasRole('Кладовщик') || $disk->isFileRefersToUser($file->file_id, $user->id)) {
             if ($disk->removeFileById($file->file_id)) {
-                @unlink ($file->getFilePath());
+                @unlink($file->getFilePath());
 
                 if (!empty($_POST["ajax"])) {
                     print 'OK';
@@ -218,8 +276,15 @@ class Controller extends Services
                 }
             }
         }
+
+        return '';
     }
 
+    /**
+     * @AJAX
+     *
+     * Загрузка файла частями
+     */
     public function upload()
     {
         $User = new User();
@@ -276,6 +341,16 @@ class Controller extends Services
         exit();
     }
 
+    /**
+     * Построение основного макета
+     *
+     * @param string $content
+     * @param string $active Активный элемент в меню
+     * @param string $diskInfo
+     * @param string $diskActions
+     *
+     * @return string|void
+     */
     private function buildContainer($content, $active, $diskInfo = '', $diskActions = '')
     {
         $user = (new User())->getCurrentUser();
@@ -305,6 +380,14 @@ class Controller extends Services
             ->render('container');
     }
 
+    /**
+     * Форматирование размера файла
+     * Поддерживает [Б, кБ, МБ, ГБ, ТБ]
+     *
+     * @param int $size Размер файла в байтах
+     *
+     * @return string
+     */
     private function formatFileSize($size)
     {
         $titles = ["Б", "кБ", "МБ", "ГБ", "ТБ"];
